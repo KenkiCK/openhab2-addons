@@ -7,6 +7,7 @@
  */
 package org.openhab.binding.nuki;
 
+<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Set;
 
@@ -16,10 +17,19 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
  * The {@link NukiBinding} class defines common constants, which are
  * used across the whole binding.
  *
+=======
+import org.eclipse.smarthome.core.thing.ThingTypeUID;
+
+/**
+ * The {@link NukiBinding} class defines common constants, which are 
+ * used across the whole binding.
+ * 
+>>>>>>> 32e822771... Initial commit of the Nuki Binding
  * @author Markus Katter - Initial contribution
  */
 public class NukiBindingConstants {
 
+<<<<<<< HEAD
     public final static String BINDING_ID = "nuki";
 
     // List of all Thing Type UIDs
@@ -48,5 +58,14 @@ public class NukiBindingConstants {
     // Nuki Bridge API Lock Actions
     public final static int LOCKACTIONS_UNLOCK = 1;
     public final static int LOCKACTIONS_LOCK = 2;
+=======
+    public static final String BINDING_ID = "nuki";
+    
+    // List of all Thing Type UIDs
+    public final static ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
+
+    // List of all Channel ids
+    public final static String CHANNEL_1 = "channel1";
+>>>>>>> 32e822771... Initial commit of the Nuki Binding
 
 }

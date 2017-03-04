@@ -4,6 +4,7 @@
         xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
+<<<<<<< HEAD
     <!-- Nuki Bridge (Bridge Type) -->
     <bridge-type id="bridge">
         <label>Nuki Bridge</label>
@@ -53,6 +54,23 @@
         <item-type>Switch</item-type>
         <label>Nuki Smart Lock Open/Close</label>
         <description>Nuki Smart Lock channel to open or close the door.</description>
+=======
+    <!-- Sample Thing Type -->
+    <thing-type id="sample">
+        <label>Nuki Binding Thing</label>
+        <description>Sample thing for Nuki Binding</description>
+
+        <channels>
+            <channel id="channel1" typeId="sample-channel"/>
+        </channels>
+    </thing-type>
+
+    <!-- Sample Channel Type -->
+    <channel-type id="sample-channel">
+        <item-type>nukiItem</item-type>
+        <label>Nuki Binding Channel</label>
+        <description>Sample channel for Nuki Binding</description>
+>>>>>>> 32e822771... Initial commit of the Nuki Binding
     </channel-type>
 
 </thing:thing-descriptions>

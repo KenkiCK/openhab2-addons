@@ -7,13 +7,23 @@
  */
 package org.openhab.binding.nuki.internal;
 
+<<<<<<< HEAD
 import java.util.Set;
 
 import org.eclipse.smarthome.core.thing.Bridge;
+=======
+import static org.openhab.binding.nuki.NukiBindingConstants.*;
+
+import java.util.Collections;
+import java.util.Set;
+
+import org.openhab.binding.nuki.handler.NukiHandler;
+>>>>>>> 32e822771... Initial commit of the Nuki Binding
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
+<<<<<<< HEAD
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.handler.NukiBridgeHandler;
 import org.openhab.binding.nuki.handler.NukiSmartLockHandler;
@@ -34,6 +44,19 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
     private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Sets
             .union(NukiBindingConstants.THING_TYPE_BRIDGE_UIDS, NukiBindingConstants.THING_TYPE_SMARTLOCK_UIDS);
 
+=======
+
+/**
+ * The {@link NukiHandlerFactory} is responsible for creating things and thing 
+ * handlers.
+ * 
+ * @author Markus Katter - Initial contribution
+ */
+public class NukiHandlerFactory extends BaseThingHandlerFactory {
+    
+    private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_SAMPLE);
+    
+>>>>>>> 32e822771... Initial commit of the Nuki Binding
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
         return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
@@ -41,6 +64,7 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
+<<<<<<< HEAD
         logger.trace("ThingHandler:createHandler({})", thing.toString());
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
@@ -54,3 +78,16 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
     }
 
 }
+=======
+
+        ThingTypeUID thingTypeUID = thing.getThingTypeUID();
+
+        if (thingTypeUID.equals(THING_TYPE_SAMPLE)) {
+            return new NukiHandler(thing);
+        }
+
+        return null;
+    }
+}
+
+>>>>>>> 32e822771... Initial commit of the Nuki Binding

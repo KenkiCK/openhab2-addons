@@ -26,6 +26,7 @@
 			</arguments>
 		</buildCommand>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	</buildSpec>
 	<natures>
 =======
@@ -38,6 +39,10 @@
 	<natures>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 >>>>>>> 32e822771... Initial commit of the Nuki Binding
+=======
+	</buildSpec>
+	<natures>
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>

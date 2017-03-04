@@ -7,6 +7,7 @@
  */
 package org.openhab.binding.nuki.handler;
 
+<<<<<<< HEAD
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -20,6 +21,14 @@ import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
 import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
+=======
+import org.eclipse.smarthome.core.thing.ChannelUID;
+import org.eclipse.smarthome.core.thing.Thing;
+import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
+import org.eclipse.smarthome.core.types.Command;
+import org.openhab.binding.nuki.NukiBindingConstants;
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NukiSmartLockHandler extends BaseThingHandler {
 
+<<<<<<< HEAD
     private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
 
     private NukiHttpClient nukiHttpClient;
@@ -38,10 +48,17 @@ public class NukiSmartLockHandler extends BaseThingHandler {
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
         logger.trace("Instantiating NukiSmartLockHandler({})", thing);
+=======
+    private Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
+
+    public NukiSmartLockHandler(Thing thing) {
+        super(thing);
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
     @Override
     public void initialize() {
+<<<<<<< HEAD
         logger.debug("NukiSmartLockHandler:initialize()");
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
         if (nukiHttpClient == null) {
@@ -55,11 +72,16 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
                     bridgeLockStateResponse.getMessage());
         }
+=======
+        logger.debug("NukiSmartLockHandler:initialize");
+        updateStatus(ThingStatus.ONLINE);
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
         logger.debug("NukiSmartLockHandler:handleCommand({}, {})", channelUID, command);
+<<<<<<< HEAD
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
         if (nukiHttpClient == null) {
             nukiHttpClient = getNukiHttpClient();
@@ -103,6 +125,11 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         }
         logger.error("Could not get NukiHttpClient from NukiBridgeHandler! Did you configure a Bridge for this Thing?");
         return null;
+=======
+        if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)) {
+            logger.warn("Smart Lock Open/Close not yet implemented!");
+        }
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
 }

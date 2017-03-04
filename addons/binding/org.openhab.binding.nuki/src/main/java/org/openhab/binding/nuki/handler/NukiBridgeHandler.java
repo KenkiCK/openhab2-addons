@@ -7,6 +7,7 @@
  */
 package org.openhab.binding.nuki.handler;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
@@ -25,6 +26,13 @@ import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
 import org.openhab.binding.nuki.dataexchange.NukiHttpServer;
 import org.openhab.binding.nuki.dataexchange.NukiHttpServerListener;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
+=======
+import org.eclipse.smarthome.core.thing.Bridge;
+import org.eclipse.smarthome.core.thing.ChannelUID;
+import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
+import org.eclipse.smarthome.core.types.Command;
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +42,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Markus Katter - Initial contribution
  */
+<<<<<<< HEAD
 public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServerListener {
 
     private final static Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
@@ -48,10 +57,19 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 
     public NukiHttpClient getNukiHttpClient() {
         return nukiHttpClient;
+=======
+public class NukiBridgeHandler extends BaseBridgeHandler {
+
+    private Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+
+    public NukiBridgeHandler(Bridge bridge) {
+        super(bridge);
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
     @Override
     public void initialize() {
+<<<<<<< HEAD
         logger.debug("NukiBridgeHandler:initialize()");
         nukiHttpClient = new NukiHttpClient(this.getConfig());
         nukiHttpServer = NukiHttpServer.getInstance(this.getConfig(), this);
@@ -62,6 +80,10 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         } else {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
         }
+=======
+        logger.debug("NukiBridgeHandler:initialize");
+        updateStatus(ThingStatus.ONLINE);
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
     @Override
@@ -69,6 +91,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         logger.debug("NukiBridgeHandler:handleCommand({}, {})", channelUID, command);
     }
 
+<<<<<<< HEAD
     @Override
     public void dispose() {
         logger.debug("NukiBridgeHandler:dispose");
@@ -95,4 +118,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         logger.error("Could not find and update Smart Lock[{}]", nukiId);
     }
 
+=======
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
 }

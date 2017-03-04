@@ -6,10 +6,14 @@
 
     <name>Nuki Binding</name>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <description>The Nuki Binding allows simple and fast integration of Nuki Smart Locks into OpenHAB. This binding needs the Nuki Smart Lock(s) to be paired via Bluetooth with a Nuki Bridge to function correctly.</description>
 =======
     <description>This is the binding for Nuki.</description>
 >>>>>>> 32e822771... Initial commit of the Nuki Binding
+=======
+    <description>The Nuki Binding allows simple and fast integration of Nuki Smart Locks into OpenHAB. This binding needs the Nuki Smart Lock(s) to be paired via Bluetooth with a Nuki Bridge to function correctly.</description>
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
     <author>Markus Katter</author>
 
 </binding:binding>

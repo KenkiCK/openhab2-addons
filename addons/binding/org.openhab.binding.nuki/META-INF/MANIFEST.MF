@@ -8,6 +8,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .
 Import-Package: 
 <<<<<<< HEAD
+<<<<<<< HEAD
  com.google.common.collect,
  com.google.gson,
  javax.servlet,
@@ -23,6 +24,9 @@ Import-Package:
  org.openhab.binding.nuki,
  org.openhab.binding.nuki.handler,
 >>>>>>> 32e822771... Initial commit of the Nuki Binding
+=======
+ com.google.common.collect;version="10.0.1",
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,
  org.eclipse.smarthome.core.thing,
@@ -31,10 +35,15 @@ Import-Package:
  org.eclipse.smarthome.core.thing.type,
  org.eclipse.smarthome.core.types,
 <<<<<<< HEAD
+<<<<<<< HEAD
  org.openhab.binding.nuki,
  org.openhab.binding.nuki.handler,
 =======
 >>>>>>> 32e822771... Initial commit of the Nuki Binding
+=======
+ org.openhab.binding.nuki,
+ org.openhab.binding.nuki.handler,
+>>>>>>> 2a58c752c... Nuki NoOp Implementation
  org.slf4j
 Service-Component: OSGI-INF/*.xml
 Export-Package: org.openhab.binding.nuki,

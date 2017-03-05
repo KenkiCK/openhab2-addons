@@ -17,12 +17,21 @@ import java.util.List;
 public class BridgeApiInfoDto {
 
     private int bridgeType;
+<<<<<<< HEAD
     private BridgeApiInfoIdDto ids;
     private BridgeApiInfoVersionDto versions;
     private int uptime;
     private String currentTime;
     private boolean serverConnected;
     private List<BridgeApiInfoScanResultDto> scanResults;
+=======
+    private BridgeApiInfoIdsDto ids;
+    private BridgeApiInfoVersionsDto versions;
+    private int uptime;
+    private String currentTime;
+    private boolean serverConnected;
+    private List<BridgeApiInfoScanResultsDto> scanResults;
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 
     public int getBridgeType() {
         return bridgeType;
@@ -32,6 +41,7 @@ public class BridgeApiInfoDto {
         this.bridgeType = bridgeType;
     }
 
+<<<<<<< HEAD
     public BridgeApiInfoIdDto getIds() {
         return ids;
     }
@@ -45,6 +55,21 @@ public class BridgeApiInfoDto {
     }
 
     public void setVersions(BridgeApiInfoVersionDto versions) {
+=======
+    public BridgeApiInfoIdsDto getIds() {
+        return ids;
+    }
+
+    public void setIds(BridgeApiInfoIdsDto ids) {
+        this.ids = ids;
+    }
+
+    public BridgeApiInfoVersionsDto getVersions() {
+        return versions;
+    }
+
+    public void setVersions(BridgeApiInfoVersionsDto versions) {
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         this.versions = versions;
     }
 
@@ -72,11 +97,19 @@ public class BridgeApiInfoDto {
         this.serverConnected = serverConnected;
     }
 
+<<<<<<< HEAD
     public List<BridgeApiInfoScanResultDto> getScanResults() {
         return scanResults;
     }
 
     public void setScanResults(List<BridgeApiInfoScanResultDto> scanResults) {
+=======
+    public List<BridgeApiInfoScanResultsDto> getScanResults() {
+        return scanResults;
+    }
+
+    public void setScanResults(List<BridgeApiInfoScanResultsDto> scanResults) {
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         this.scanResults = scanResults;
     }
 

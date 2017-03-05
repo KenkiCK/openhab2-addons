@@ -16,10 +16,13 @@ import org.openhab.binding.nuki.dto.BridgeApiInfoDto;
  */
 public class BridgeInfoResponse extends NukiBaseResponse {
 
+<<<<<<< HEAD
     public BridgeInfoResponse(int status, String message) {
         super(status, message);
     }
 
+=======
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
     private BridgeApiInfoDto bridgeInfo;
 
     public BridgeApiInfoDto getBridgeInfo() {

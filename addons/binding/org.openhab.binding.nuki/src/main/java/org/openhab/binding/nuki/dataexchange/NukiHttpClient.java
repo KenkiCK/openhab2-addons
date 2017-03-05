@@ -16,8 +16,11 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.smarthome.config.core.Configuration;
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dto.BridgeApiInfoDto;
+<<<<<<< HEAD
 import org.openhab.binding.nuki.dto.BridgeApiLockActionDto;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
+=======
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,20 +39,27 @@ public class NukiHttpClient {
     private Configuration configuration;
 
     public NukiHttpClient(Configuration configuration) {
+<<<<<<< HEAD
         logger.trace("Instantiating NukiHttpClient({})", configuration);
+=======
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         this.configuration = configuration;
         this.httpClient = new HttpClient();
         long connectTimeout = NukiBindingConstants.CLIENT_CONNECTTIMEOUT;
         httpClient.setConnectTimeout(connectTimeout);
         try {
             httpClient.start();
+<<<<<<< HEAD
             logger.debug("Started httpClient[{}]", httpClient);
+=======
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         } catch (Exception e) {
             logger.error("Could not start NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
         }
     }
 
+<<<<<<< HEAD
     public void stopClient() {
         try {
             if (httpClient.isStarted()) {
@@ -59,15 +69,30 @@ public class NukiHttpClient {
         } catch (Exception e) {
             logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
+=======
+    public void stop() {
+        if (httpClient.isStarted()) {
+            try {
+                httpClient.stop();
+            } catch (Exception e) {
+                logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
+                e.printStackTrace();
+            }
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         }
     }
 
     public BridgeInfoResponse getBridgeInfo() {
         logger.debug("NukiHttpClient:getBridgeInfo");
+<<<<<<< HEAD
+=======
+        BridgeInfoResponse bridgeInfoResponse = new BridgeInfoResponse();
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
         String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
         String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
         String uri = String.format(NukiBindingConstants.URI_INFO, configIp, configPort, configApiToken);
+<<<<<<< HEAD
         logger.trace("uri[{}]", uri);
         try {
             ContentResponse contentResponse = httpClient.GET(uri);
@@ -154,6 +179,28 @@ public class NukiHttpClient {
                 return new BridgeLockActionResponse(500, e.getMessage());
             }
         }
+=======
+        logger.debug("uri[{}]", uri);
+        try {
+            ContentResponse contentResponse = httpClient.GET(uri);
+            String contentResponseAsString = contentResponse.getContentAsString();
+            logger.debug("contentResponseAsString[{}]", contentResponseAsString);
+            Gson gson = new Gson();
+            BridgeApiInfoDto bridgeApiInfoDto = gson.fromJson(contentResponseAsString, BridgeApiInfoDto.class);
+            bridgeInfoResponse.setStatusCode(contentResponse.getStatus());
+            bridgeInfoResponse.setBridgeInfo(bridgeApiInfoDto);
+        } catch (Exception e) {
+            if (e instanceof ExecutionException && e.getCause() instanceof HttpResponseException) {
+                bridgeInfoResponse.setStatusCode(((HttpResponseException) e.getCause()).getResponse().getStatus());
+                bridgeInfoResponse.setMessage(((HttpResponseException) e.getCause()).getResponse().getReason());
+            } else {
+                bridgeInfoResponse.setStatusCode(500);
+                bridgeInfoResponse.setMessage(e.getMessage());
+            }
+            logger.error("Could not get Bridge Info! ERROR: {}", e.getMessage());
+        }
+        return bridgeInfoResponse;
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
     }
 
 }

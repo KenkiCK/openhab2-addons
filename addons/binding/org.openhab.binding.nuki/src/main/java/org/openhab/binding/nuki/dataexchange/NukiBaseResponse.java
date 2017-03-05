@@ -14,6 +14,7 @@ package org.openhab.binding.nuki.dataexchange;
  */
 public abstract class NukiBaseResponse {
 
+<<<<<<< HEAD
     private int status;
     private String message;
 
@@ -28,6 +29,18 @@ public abstract class NukiBaseResponse {
 
     public void setStatus(int status) {
         this.status = status;
+=======
+    private int statusCode;
+    private String message;
+    private String detail;
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
     }
 
     public String getMessage() {
@@ -38,4 +51,15 @@ public abstract class NukiBaseResponse {
         this.message = message;
     }
 
+<<<<<<< HEAD
+=======
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 }

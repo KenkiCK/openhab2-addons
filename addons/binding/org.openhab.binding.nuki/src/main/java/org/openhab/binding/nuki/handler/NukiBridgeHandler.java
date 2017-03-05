@@ -30,9 +30,15 @@ import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
 import org.eclipse.smarthome.core.types.Command;
+<<<<<<< HEAD
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+import org.openhab.binding.nuki.dataexchange.BridgeInfoResponse;
+import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +66,9 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 =======
 public class NukiBridgeHandler extends BaseBridgeHandler {
 
-    private Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+
+    private NukiHttpClient nukiHttpClient;
 
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
@@ -82,8 +90,19 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
         }
 =======
         logger.debug("NukiBridgeHandler:initialize");
+<<<<<<< HEAD
         updateStatus(ThingStatus.ONLINE);
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+        nukiHttpClient = new NukiHttpClient(this.getConfig());
+        BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
+        if (bridgeInfoResponse.getStatusCode() == 200) {
+            updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
+                    "Found " + bridgeInfoResponse.getBridgeInfo().getScanResults().size() + " Nuki Smart Locks.");
+        } else {
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
+        }
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
     }
 
     @Override
@@ -91,6 +110,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
         logger.debug("NukiBridgeHandler:handleCommand({}, {})", channelUID, command);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @Override
     public void dispose() {
@@ -120,4 +140,12 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
 
 =======
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+    @Override
+    public void dispose() {
+        logger.debug("NukiBridgeHandler:dispose");
+        nukiHttpClient.stop();
+    }
+
+>>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 }

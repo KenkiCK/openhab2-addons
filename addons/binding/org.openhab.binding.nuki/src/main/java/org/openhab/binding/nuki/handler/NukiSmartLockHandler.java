@@ -25,6 +25,9 @@ import org.eclipse.smarthome.core.types.State;
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
 import org.openhab.binding.nuki.NukiBindingConstants;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
 import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
 import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
@@ -131,6 +134,9 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                         bridgeLockStateResponse.getMessage());
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
         } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)
                 && (command.equals(OnOffType.ON) || command.equals(OnOffType.OFF))) {
             int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCKACTIONS_UNLOCK
@@ -141,6 +147,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             }
         } else {
             logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);
+<<<<<<< HEAD
         }
     }
 
@@ -167,6 +174,8 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
         if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)) {
             logger.warn("Smart Lock Open/Close not yet implemented!");
+=======
+>>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
         }
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
     }

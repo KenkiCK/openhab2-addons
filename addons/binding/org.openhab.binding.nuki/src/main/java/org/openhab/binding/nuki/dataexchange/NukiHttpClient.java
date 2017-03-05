@@ -18,6 +18,9 @@ import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dto.BridgeApiInfoDto;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
 import org.openhab.binding.nuki.dto.BridgeApiLockActionDto;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
 =======
@@ -243,6 +246,40 @@ public class NukiHttpClient {
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
 =======
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
+    }
+
+    public BridgeLockActionResponse getBridgeLockAction(String nukiId, int lockAction) {
+        String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
+        BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
+        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
+        String uri = String.format(NukiBindingConstants.URI_LOCKACTION, configIp, configPort, configApiToken, nukiId,
+                lockAction);
+        logger.debug("uri[{}]", uri);
+        try {
+            ContentResponse contentResponse = httpClient.GET(uri);
+            String contentResponseAsString = contentResponse.getContentAsString();
+            logger.debug("contentResponseAsString[{}]", contentResponseAsString);
+            int status = contentResponse.getStatus();
+            if (status == 200) {
+                BridgeApiLockActionDto bridgeApiLockActionDto = new Gson().fromJson(contentResponseAsString,
+                        BridgeApiLockActionDto.class);
+                BridgeLockActionResponse bridgeLockActionResponse = new BridgeLockActionResponse(status, "");
+                bridgeLockActionResponse.setBridgeLockAction(bridgeApiLockActionDto);
+                return bridgeLockActionResponse;
+            } else {
+                logger.error("Nuki Smart Lock with NukiID[{}] not found!", nukiId);
+                return new BridgeLockActionResponse(status, "Nuki Smart Lock with NukiID[" + nukiId + "] not found!");
+            }
+        } catch (Exception e) {
+            logger.error("Could not execute lockAction[{}] on NukiID[{}]! ERROR: {}", lockAction, nukiId,
+                    e.getMessage());
+            if (e instanceof ExecutionException && e.getCause() instanceof HttpResponseException) {
+                return new BridgeLockActionResponse(((HttpResponseException) e.getCause()).getResponse().getStatus(),
+                        ((HttpResponseException) e.getCause()).getResponse().getReason());
+            } else {
+                return new BridgeLockActionResponse(500, e.getMessage());
+            }
+        }
     }
 
 }

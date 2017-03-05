@@ -20,9 +20,13 @@ import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.eclipse.smarthome.core.types.State;
 =======
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
+=======
+import org.eclipse.smarthome.core.types.State;
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
 import org.openhab.binding.nuki.NukiBindingConstants;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -178,6 +182,12 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 >>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
         }
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+    }
+
+    @Override
+    public void handleUpdate(ChannelUID channelUID, State newState) {
+        logger.debug("NukiSmartLockHandler:handleUpdate({}, {})", channelUID, newState);
+        updateState(channelUID, newState);
     }
 
     private NukiHttpClient getNukiHttpClient() {

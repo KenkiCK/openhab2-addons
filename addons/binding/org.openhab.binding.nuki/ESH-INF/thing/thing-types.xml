@@ -20,10 +20,14 @@
             <parameter name="PORT" type="integer" required="true">
                 <label>Port</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <description>The Port on which the Nuki Bridge REST API runs.</description>
 =======
                 <description>The Port on whicht the Nuki Bridge REST API runs.</description>
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+                <description>The Port on which the Nuki Bridge REST API runs.</description>
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
                 <default>8080</default>
             </parameter>
             <parameter name="APITOKEN" type="text" required="true">
@@ -31,11 +35,15 @@
                 <description>The API Token configured via the Nuki App when enabling the API/IFTTT.</description>
             </parameter>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
             <parameter name="CALLBACK_PORT" type="integer" required="true">
                 <label>Callback Port</label>
                 <description>The port on the OpenHAB server to which the Nuki Bridge sends Lock State changes.</description>
                 <default>8081</default>
             </parameter>
+<<<<<<< HEAD
         </config-description>
     </bridge-type>
 
@@ -68,6 +76,8 @@
         <label>Nuki Binding Thing</label>
         <description>Sample thing for Nuki Binding</description>
 =======
+=======
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         </config-description>
     </bridge-type>
 >>>>>>> 2a58c752c... Nuki NoOp Implementation

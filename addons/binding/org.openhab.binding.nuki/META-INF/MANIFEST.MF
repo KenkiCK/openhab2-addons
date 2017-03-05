@@ -30,8 +30,14 @@ Import-Package:
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
 =======
  com.google.gson;version="2.5.0",
+ javax.servlet;version="2.6.0",
+ javax.servlet.http;version="2.6.0",
  org.eclipse.jetty.client;version="9.2.12",
  org.eclipse.jetty.client.api;version="9.2.12",
+ org.eclipse.jetty.http;version="9.2.12",
+ org.eclipse.jetty.server;version="9.2.12",
+ org.eclipse.jetty.server.handler;version="9.2.12",
+ org.eclipse.jetty.util;version="9.2.12",
  org.eclipse.jetty.util.component;version="9.2.12",
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
  org.eclipse.smarthome.config.core,

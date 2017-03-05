@@ -67,6 +67,7 @@ public class NukiHttpClient {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void stopClient() {
         try {
             if (httpClient.isStarted()) {
@@ -80,12 +81,20 @@ public class NukiHttpClient {
     public void stop() {
         if (httpClient.isStarted()) {
             try {
+=======
+    public void stopClient() {
+        try {
+            if (httpClient.isStarted()) {
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
                 httpClient.stop();
-            } catch (Exception e) {
-                logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
-                e.printStackTrace();
             }
+<<<<<<< HEAD
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
+=======
+        } catch (Exception e) {
+            logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
+            e.printStackTrace();
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         }
     }
 

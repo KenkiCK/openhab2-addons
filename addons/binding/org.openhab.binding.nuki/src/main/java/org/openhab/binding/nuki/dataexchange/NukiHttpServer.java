@@ -41,7 +41,11 @@ public class NukiHttpServer extends AbstractHandler {
     private NukiBridgeHandler listener;
 
     public static NukiHttpServer getInstance(Configuration configuration, NukiBridgeHandler listener) {
+<<<<<<< HEAD
         logger.trace("Getting NukiHttpServer instance[{}]", instance);
+=======
+        logger.debug("Requesting NukiHttpServer instance.");
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         if (instance == null) {
             instance = new NukiHttpServer(configuration, listener);
         }
@@ -49,14 +53,22 @@ public class NukiHttpServer extends AbstractHandler {
     }
 
     protected NukiHttpServer(Configuration configuration, NukiBridgeHandler listener) {
+<<<<<<< HEAD
         logger.trace("Instantiating NukiHttpServer({})", configuration);
+=======
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         this.listener = listener;
         BigDecimal configCallbackPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_CALLBACK_PORT);
         server = new Server(configCallbackPort.intValue());
         server.setHandler(this);
         try {
+<<<<<<< HEAD
             server.start();
             logger.debug("Started new NukiHttpServer instance on PORT[{}]", configCallbackPort);
+=======
+            logger.debug("Creating new NukiHttpServer instance on PORT[{}]", configCallbackPort);
+            server.start();
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         } catch (Exception e) {
             logger.error("Could not start NukiHttpServer! ERROR: {}", e.getMessage());
             e.printStackTrace();
@@ -67,8 +79,11 @@ public class NukiHttpServer extends AbstractHandler {
         try {
             if (server.isStarted()) {
                 server.stop();
+<<<<<<< HEAD
                 NukiHttpServer.instance = null;
                 logger.trace("Stopped NukiHttpServer");
+=======
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
             }
         } catch (Exception e) {
             logger.error("Could not stop NukiHttpServer! ERROR: {}", e.getMessage());
@@ -91,7 +106,11 @@ public class NukiHttpServer extends AbstractHandler {
             logger.error("Could not handle request! Message[{}]", e.getMessage());
             e.printStackTrace();
         }
+<<<<<<< HEAD
         logger.trace("requestContent[{}]", requestContent);
+=======
+        logger.debug("requestContent[{}]", requestContent);
+>>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
         BridgeApiLockStateRequestDto bridgeApiLockStateRequestDto = new Gson().fromJson(requestContent.toString(),
                 BridgeApiLockStateRequestDto.class);
         response.setContentType("application/json;charset=utf-8");

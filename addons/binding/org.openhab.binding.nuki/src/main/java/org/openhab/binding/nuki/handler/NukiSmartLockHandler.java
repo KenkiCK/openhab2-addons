@@ -18,6 +18,7 @@ import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.nuki.NukiBindingConstants;
+<<<<<<< HEAD
 import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
 import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
@@ -29,6 +30,10 @@ import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.openhab.binding.nuki.NukiBindingConstants;
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
+import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
+>>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +46,7 @@ import org.slf4j.LoggerFactory;
 public class NukiSmartLockHandler extends BaseThingHandler {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
 
     private NukiHttpClient nukiHttpClient;
@@ -50,6 +56,11 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         logger.trace("Instantiating NukiSmartLockHandler({})", thing);
 =======
     private Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
+=======
+    private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
+
+    private NukiHttpClient nukiHttpClient;
+>>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
 
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
@@ -74,8 +85,23 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         }
 =======
         logger.debug("NukiSmartLockHandler:initialize");
+<<<<<<< HEAD
         updateStatus(ThingStatus.ONLINE);
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
+        if (nukiHttpClient == null) {
+            nukiHttpClient = getNukiHttpClient();
+        }
+        BridgeLockStateResponse bridgeLockStateResponse = nukiHttpClient.getBridgeLockState(nukiId);
+        if (bridgeLockStateResponse.getStatus() == 200) {
+            updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
+                    "Nuki Smart Lock is " + bridgeLockStateResponse.getBridgeLockState().getStateName());
+        } else {
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
+                    bridgeLockStateResponse.getMessage());
+        }
+>>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
     }
 
     @Override
@@ -130,6 +156,14 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             logger.warn("Smart Lock Open/Close not yet implemented!");
         }
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+    }
+
+    private NukiHttpClient getNukiHttpClient() {
+        if (this.getBridge() != null && this.getBridge().getHandler() instanceof NukiBridgeHandler) {
+            return ((NukiBridgeHandler) this.getBridge().getHandler()).getNukiHttpClient();
+        }
+        logger.error("Could not get NukiHttpClient from NukiBridgeHandler!");
+        return null;
     }
 
 }

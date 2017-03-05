@@ -75,6 +75,10 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
+    public NukiHttpClient getNukiHttpClient() {
+        return nukiHttpClient;
+    }
+
     @Override
     public void initialize() {
 <<<<<<< HEAD
@@ -96,7 +100,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
 =======
         nukiHttpClient = new NukiHttpClient(this.getConfig());
         BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
-        if (bridgeInfoResponse.getStatusCode() == 200) {
+        if (bridgeInfoResponse.getStatus() == 200) {
             updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
                     "Found " + bridgeInfoResponse.getBridgeInfo().getScanResults().size() + " Nuki Smart Locks.");
         } else {

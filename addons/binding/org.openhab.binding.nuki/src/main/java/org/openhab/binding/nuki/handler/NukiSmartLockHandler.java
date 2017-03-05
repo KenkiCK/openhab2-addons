@@ -8,6 +8,9 @@
 package org.openhab.binding.nuki.handler;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -16,7 +19,10 @@ import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
+<<<<<<< HEAD
 import org.eclipse.smarthome.core.types.State;
+=======
+>>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
 import org.openhab.binding.nuki.NukiBindingConstants;
 <<<<<<< HEAD
 import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
@@ -108,6 +114,9 @@ public class NukiSmartLockHandler extends BaseThingHandler {
     public void handleCommand(ChannelUID channelUID, Command command) {
         logger.debug("NukiSmartLockHandler:handleCommand({}, {})", channelUID, command);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
         if (nukiHttpClient == null) {
             nukiHttpClient = getNukiHttpClient();
@@ -121,6 +130,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                 logger.error("Could not refresh Nuki Smart Lock[{}]! Message: {}", nukiId,
                         bridgeLockStateResponse.getMessage());
             }
+<<<<<<< HEAD
         } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)
                 && (command.equals(OnOffType.ON) || command.equals(OnOffType.OFF))) {
             int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCKACTIONS_UNLOCK
@@ -152,6 +162,9 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         logger.error("Could not get NukiHttpClient from NukiBridgeHandler! Did you configure a Bridge for this Thing?");
         return null;
 =======
+=======
+        }
+>>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
         if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)) {
             logger.warn("Smart Lock Open/Close not yet implemented!");
         }

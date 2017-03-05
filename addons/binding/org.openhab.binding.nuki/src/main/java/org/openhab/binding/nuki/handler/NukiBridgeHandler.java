@@ -78,6 +78,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
         logger.trace("Instantiating NukiBridgeHandler({})", bridge);
+<<<<<<< HEAD
     }
 
     public NukiHttpClient getNukiHttpClient() {
@@ -96,6 +97,8 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+>>>>>>> 9964fbb2e... Tweaked Logging
     }
 
     public NukiHttpClient getNukiHttpClient() {
@@ -104,6 +107,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 
     @Override
     public void initialize() {
+<<<<<<< HEAD
 <<<<<<< HEAD
         logger.debug("NukiBridgeHandler:initialize()");
         nukiHttpClient = new NukiHttpClient(this.getConfig());
@@ -121,6 +125,9 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         updateStatus(ThingStatus.ONLINE);
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
 =======
+=======
+        logger.debug("NukiBridgeHandler:initialize()");
+>>>>>>> 9964fbb2e... Tweaked Logging
         nukiHttpClient = new NukiHttpClient(this.getConfig());
         nukiHttpServer = NukiHttpServer.getInstance(this.getConfig(), this);
         BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
@@ -188,7 +195,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
                 Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE);
                 State state = bridgeApiLockStateRequestDto.getState() == 1 ? OnOffType.ON : OnOffType.OFF;
                 thing.getHandler().handleUpdate(channel.getUID(), state);
-                logger.debug("Updated Nuki Smart Lock[{}] to state[{}]", nukiId, state);
+                logger.trace("Updated Nuki Smart Lock[{}] to state[{}]", nukiId, state);
                 return;
             }
         }

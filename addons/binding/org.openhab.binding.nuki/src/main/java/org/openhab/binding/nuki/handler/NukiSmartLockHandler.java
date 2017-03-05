@@ -67,6 +67,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
         logger.trace("Instantiating NukiSmartLockHandler({})", thing);
+<<<<<<< HEAD
 =======
     private Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
 =======
@@ -78,6 +79,8 @@ public class NukiSmartLockHandler extends BaseThingHandler {
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+>>>>>>> 9964fbb2e... Tweaked Logging
     }
 
     @Override

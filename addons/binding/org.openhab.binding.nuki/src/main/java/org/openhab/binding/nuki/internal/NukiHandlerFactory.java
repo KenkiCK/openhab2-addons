@@ -85,6 +85,7 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
     @Override
     protected ThingHandler createHandler(Thing thing) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         logger.trace("ThingHandler:createHandler({})", thing.toString());
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
@@ -100,6 +101,9 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 }
 =======
 
+=======
+        logger.trace("ThingHandler:createHandler({})", thing.toString());
+>>>>>>> 9964fbb2e... Tweaked Logging
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (NukiBindingConstants.THING_TYPE_BRIDGE_UIDS.contains(thingTypeUID)) {

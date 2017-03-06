@@ -9,6 +9,9 @@ Bundle-ClassPath: .
 Import-Package: 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f1e4349d4... Removed version information for packages
  com.google.common.collect,
  com.google.gson,
  javax.servlet,
@@ -20,6 +23,7 @@ Import-Package:
  org.eclipse.jetty.server.handler,
  org.eclipse.jetty.util,
  org.eclipse.jetty.util.component,
+<<<<<<< HEAD
 =======
  org.openhab.binding.nuki,
  org.openhab.binding.nuki.handler,
@@ -40,6 +44,8 @@ Import-Package:
  org.eclipse.jetty.util;version="9.2.12",
  org.eclipse.jetty.util.component;version="9.2.12",
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
+=======
+>>>>>>> f1e4349d4... Removed version information for packages
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,
  org.eclipse.smarthome.core.thing,

@@ -94,11 +94,15 @@ public class NukiHttpServer extends AbstractHandler {
                 server.stop();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 NukiHttpServer.instance = null;
                 logger.trace("Stopped NukiHttpServer");
 =======
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
 =======
+=======
+                NukiHttpServer.instance = null;
+>>>>>>> 98068bc50... Made sure NukiHttpServer is really stopped (null)
                 logger.trace("Stopped NukiHttpServer");
 >>>>>>> 9964fbb2e... Tweaked Logging
             }

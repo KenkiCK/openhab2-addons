@@ -253,9 +253,15 @@
         <bundle start-level="80">mvn:org.openhab.binding/org.openhab.binding.network/${project.version}</bundle>
     </feature>
 
+<<<<<<< HEAD
     <feature name="openhab-binding-nikohomecontrol" description="Niko Home Control Binding" version="${project.version}">
         <feature>openhab-runtime-base</feature>
         <bundle start-level="80">mvn:org.openhab.binding/org.openhab.binding.nikohomecontrol/${project.version}</bundle>
+=======
+    <feature name="openhab-binding-nuki" description="Nuki Binding" version="${project.version}">
+        <feature>openhab-runtime-base</feature>
+        <bundle start-level="80">mvn:org.openhab.binding/org.openhab.binding.nuki/${project.version}</bundle>
+>>>>>>> 7c4e76f51... Added Nuki Binding to binding pom.xml and features.xml
     </feature>
 
     <feature name="openhab-binding-oceanic" description="Oceanic Binding" version="${project.version}">

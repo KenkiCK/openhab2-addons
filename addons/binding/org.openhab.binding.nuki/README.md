@@ -8,6 +8,8 @@ This binding allows you to integrate, view, control and configure the Nuki Bridg
 
 This binding was tested with the [Nuki Bridge](https://nuki.io/en/bridge/).  
 It might also work with the [Nuki Software Bridge](https://play.google.com/store/apps/details?id=io.nuki.bridge&hl=en) - Feedback is really appreciated!  
+**Please note:** At the moment you still need to configure the callback URL on the Nuki Bridge to point to your OpenHAB2 server. See [Bridge HTTP-API](https://nuki.io/de/api/), Section */callback* and */callback/add*.  
+
 
 ## Supported Things
 

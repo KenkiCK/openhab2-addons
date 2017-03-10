@@ -72,7 +72,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 
     private final static Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
 
-    private NukiHttpClient nukiHttpClient;
     private NukiHttpServer nukiHttpServer;
 
     public NukiBridgeHandler(Bridge bridge) {
@@ -101,18 +100,13 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 >>>>>>> 9964fbb2e... Tweaked Logging
     }
 
-    public NukiHttpClient getNukiHttpClient() {
-        return nukiHttpClient;
-    }
-
     @Override
     public void initialize() {
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.debug("NukiBridgeHandler:initialize()");
-        nukiHttpClient = new NukiHttpClient(this.getConfig());
         nukiHttpServer = NukiHttpServer.getInstance(this.getConfig(), this);
-        BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
+        BridgeInfoResponse bridgeInfoResponse = new NukiHttpClient(this.getConfig()).getBridgeInfo();
         if (bridgeInfoResponse.getStatus() == 200) {
             updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
                     "Found " + bridgeInfoResponse.getBridgeInfo().getScanResults().size() + " Nuki Smart Locks.");
@@ -179,7 +173,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
     @Override
     public void dispose() {
         logger.debug("NukiBridgeHandler:dispose");
-        nukiHttpClient.stopClient();
         nukiHttpServer.stopServer();
     }
 

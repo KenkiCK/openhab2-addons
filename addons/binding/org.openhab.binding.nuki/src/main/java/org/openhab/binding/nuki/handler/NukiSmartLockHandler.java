@@ -9,8 +9,12 @@ package org.openhab.binding.nuki.handler;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
+=======
+import org.eclipse.smarthome.config.core.Configuration;
+>>>>>>> c32d3861e... Using unique instance of NukiHttpClient for each request
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -62,8 +66,6 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 <<<<<<< HEAD
     private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
 
-    private NukiHttpClient nukiHttpClient;
-
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
         logger.trace("Instantiating NukiSmartLockHandler({})", thing);
@@ -89,10 +91,8 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 <<<<<<< HEAD
         logger.debug("NukiSmartLockHandler:initialize()");
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
-        if (nukiHttpClient == null) {
-            nukiHttpClient = getNukiHttpClient();
-        }
-        BridgeLockStateResponse bridgeLockStateResponse = nukiHttpClient.getBridgeLockState(nukiId);
+        BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
+                .getBridgeLockState(nukiId);
         if (bridgeLockStateResponse.getStatus() == 200) {
             updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
                     "Nuki Smart Lock is " + bridgeLockStateResponse.getBridgeLockState().getStateName());
@@ -132,11 +132,9 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 =======
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
-        if (nukiHttpClient == null) {
-            nukiHttpClient = getNukiHttpClient();
-        }
         if (command.equals(RefreshType.REFRESH)) {
-            BridgeLockStateResponse bridgeLockStateResponse = nukiHttpClient.getBridgeLockState(nukiId);
+            BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
+                    .getBridgeLockState(nukiId);
             if (bridgeLockStateResponse.getStatus() == 200) {
                 updateState(channelUID,
                         (bridgeLockStateResponse.getBridgeLockState().getState() == 1 ? OnOffType.ON : OnOffType.OFF));
@@ -152,7 +150,8 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                 && (command.equals(OnOffType.ON) || command.equals(OnOffType.OFF))) {
             int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCKACTIONS_UNLOCK
                     : NukiBindingConstants.LOCKACTIONS_LOCK);
-            BridgeLockActionResponse bridgeLockActionResponse = nukiHttpClient.getBridgeLockAction(nukiId, lockAction);
+            BridgeLockActionResponse bridgeLockActionResponse = new NukiHttpClient(getBridgeConfig())
+                    .getBridgeLockAction(nukiId, lockAction);
             if (bridgeLockActionResponse.getStatus() != 200) {
                 logger.error("Could not execute command[{}] on Nuki Smart Lock[{}]", command, nukiId);
             }
@@ -202,11 +201,13 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         logger.debug("NukiSmartLockHandler:dispose()");
     }
 
-    private NukiHttpClient getNukiHttpClient() {
+    private Configuration getBridgeConfig() {
+        logger.trace("Trying to getBridgeConfig for thing[{}]", this.getThing());
         if (this.getBridge() != null && this.getBridge().getHandler() instanceof NukiBridgeHandler) {
-            return ((NukiBridgeHandler) this.getBridge().getHandler()).getNukiHttpClient();
+            return this.getBridge().getConfiguration();
+        } else {
+            logger.error("Could not getBridgeConfig! Did you configure a bridge for this thing?");
         }
-        logger.error("Could not get NukiHttpClient from NukiBridgeHandler! Did you configure a Bridge for this Thing?");
         return null;
     }
 

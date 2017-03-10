@@ -58,8 +58,13 @@ public class NukiHttpClient {
         this.httpClient = new HttpClient();
         long connectTimeout = NukiBindingConstants.CLIENT_CONNECTTIMEOUT;
         httpClient.setConnectTimeout(connectTimeout);
+    }
+
+    public void startClient() {
+        logger.trace("Starting HttpClient");
         try {
             httpClient.start();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
             logger.debug("Started httpClient[{}]", httpClient);
@@ -68,6 +73,9 @@ public class NukiHttpClient {
 =======
             logger.debug("Started httpClient[{}]", httpClient);
 >>>>>>> 9964fbb2e... Tweaked Logging
+=======
+            logger.trace("Started httpClient[{}]", httpClient);
+>>>>>>> c32d3861e... Using unique instance of NukiHttpClient for each request
         } catch (Exception e) {
             logger.error("Could not start NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
@@ -77,10 +85,11 @@ public class NukiHttpClient {
 <<<<<<< HEAD
 <<<<<<< HEAD
     public void stopClient() {
+        logger.trace("Stopping HttpClient");
         try {
             if (httpClient.isStarted()) {
                 httpClient.stop();
-                logger.trace("Stopped NukiHttpClient");
+                logger.trace("Stopped NukiHttpClient[{}]", httpClient);
             }
         } catch (Exception e) {
             logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
@@ -213,7 +222,9 @@ public class NukiHttpClient {
         logger.trace("uri[{}]", uri);
 >>>>>>> 9964fbb2e... Tweaked Logging
         try {
+            startClient();
             ContentResponse contentResponse = httpClient.GET(uri);
+            stopClient();
             String contentResponseAsString = contentResponse.getContentAsString();
             logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             BridgeApiInfoDto bridgeApiInfoDto = new Gson().fromJson(contentResponseAsString, BridgeApiInfoDto.class);
@@ -239,7 +250,9 @@ public class NukiHttpClient {
         String uri = String.format(NukiBindingConstants.URI_LOCKSTATE, configIp, configPort, configApiToken, nukiId);
         logger.trace("uri[{}]", uri);
         try {
+            startClient();
             ContentResponse contentResponse = httpClient.GET(uri);
+            stopClient();
             String contentResponseAsString = contentResponse.getContentAsString();
             logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             int status = contentResponse.getStatus();
@@ -278,7 +291,9 @@ public class NukiHttpClient {
                 lockAction);
         logger.trace("uri[{}]", uri);
         try {
+            startClient();
             ContentResponse contentResponse = httpClient.GET(uri);
+            stopClient();
             String contentResponseAsString = contentResponse.getContentAsString();
             logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             int status = contentResponse.getStatus();

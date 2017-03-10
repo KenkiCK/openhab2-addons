@@ -21,7 +21,6 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.smarthome.config.core.Configuration;
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
-import org.openhab.binding.nuki.handler.NukiBridgeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +37,15 @@ public class NukiHttpServer extends AbstractHandler {
 
     private static NukiHttpServer instance;
     private Server server;
-    private NukiBridgeHandler listener;
+    private NukiHttpServerListener listener;
 
+<<<<<<< HEAD
     public static NukiHttpServer getInstance(Configuration configuration, NukiBridgeHandler listener) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+    public static NukiHttpServer getInstance(Configuration configuration, NukiHttpServerListener listener) {
+>>>>>>> 0f4dfeb5f... Fixed listener declaration to NukiHttpServerListener
         logger.trace("Getting NukiHttpServer instance[{}]", instance);
 =======
         logger.debug("Requesting NukiHttpServer instance.");
@@ -56,6 +59,7 @@ public class NukiHttpServer extends AbstractHandler {
         return instance;
     }
 
+<<<<<<< HEAD
     protected NukiHttpServer(Configuration configuration, NukiBridgeHandler listener) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -63,6 +67,9 @@ public class NukiHttpServer extends AbstractHandler {
 =======
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
 =======
+=======
+    protected NukiHttpServer(Configuration configuration, NukiHttpServerListener listener) {
+>>>>>>> 0f4dfeb5f... Fixed listener declaration to NukiHttpServerListener
         logger.trace("Instantiating NukiHttpServer({})", configuration);
 >>>>>>> 9964fbb2e... Tweaked Logging
         this.listener = listener;
@@ -89,6 +96,7 @@ public class NukiHttpServer extends AbstractHandler {
     }
 
     public void stopServer() {
+        logger.trace("Stopping NukiHttpServer");
         try {
             if (server.isStarted()) {
                 server.stop();

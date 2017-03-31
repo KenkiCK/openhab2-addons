@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,12 +18,18 @@ public class BridgeInfoResponse extends NukiBaseResponse {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
+=======
+    private BridgeApiInfoDto bridgeInfo;
+
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
     public BridgeInfoResponse(int status, String message) {
         super(status, message);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
@@ -31,6 +37,8 @@ public class BridgeInfoResponse extends NukiBaseResponse {
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
     private BridgeApiInfoDto bridgeInfo;
 
+=======
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
     public BridgeApiInfoDto getBridgeInfo() {
         return bridgeInfo;
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,8 +50,8 @@ import com.google.common.collect.Sets;
  */
 public class NukiHandlerFactory extends BaseThingHandlerFactory {
 
-    private final static Logger logger = LoggerFactory.getLogger(NukiHandlerFactory.class);
-    private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Sets
+    private final Logger logger = LoggerFactory.getLogger(NukiHandlerFactory.class);
+    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Sets
             .union(NukiBindingConstants.THING_TYPE_BRIDGE_UIDS, NukiBindingConstants.THING_TYPE_SMARTLOCK_UIDS);
 
 =======
@@ -86,6 +86,7 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
     protected ThingHandler createHandler(Thing thing) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         logger.trace("ThingHandler:createHandler({})", thing.toString());
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
@@ -104,6 +105,9 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 =======
         logger.trace("ThingHandler:createHandler({})", thing.toString());
 >>>>>>> 9964fbb2e... Tweaked Logging
+=======
+        logger.trace("ThingHandler:createHandler({})", thing);
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (NukiBindingConstants.THING_TYPE_BRIDGE_UIDS.contains(thingTypeUID)) {

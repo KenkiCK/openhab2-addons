@@ -13,11 +13,11 @@
         <label>Nuki Bridge</label>
         <description>This bridge represents a Nuki Bridge on your local network. Nuki Smart Locks have to be paired via Bluetooth with it.</description>
         <config-description>
-            <parameter name="IP" type="text" required="true">
+            <parameter name="ip" type="text" required="true">
                 <label>IP Address</label>
                 <description>The IP Address of the Nuki Bridge.</description>
             </parameter>
-            <parameter name="PORT" type="integer" required="true">
+            <parameter name="port" type="integer" required="true">
                 <label>Port</label>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -30,17 +30,21 @@
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
                 <default>8080</default>
             </parameter>
-            <parameter name="APITOKEN" type="text" required="true">
+            <parameter name="apiToken" type="text" required="true">
                 <label>API Token</label>
                 <description>The API Token configured via the Nuki App when enabling the API/IFTTT.</description>
             </parameter>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
             <parameter name="CALLBACK_PORT" type="integer" required="true">
+=======
+            <parameter name="callbackPort" type="integer" required="true">
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
                 <label>Callback Port</label>
-                <description>The port on the OpenHAB server to which the Nuki Bridge sends Lock State changes.</description>
+                <description>The port on the openHAB server to which the Nuki Bridge sends Lock State changes.</description>
                 <default>8081</default>
             </parameter>
 <<<<<<< HEAD
@@ -93,7 +97,7 @@
             <channel id="smartLockOpenClose" typeId="channelTypeSmartLockOpenClose"/>
         </channels>
         <config-description>
-            <parameter name="NUKIID" type="text" required="true">
+            <parameter name="nukiId" type="text" required="true">
                 <label>Nuki ID</label>
                 <description>The ID of the Nuki Smart Lock.</description>
             </parameter>

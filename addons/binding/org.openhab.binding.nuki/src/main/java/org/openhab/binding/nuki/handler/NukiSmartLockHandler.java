@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,11 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
+=======
+    private final Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
 
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
@@ -90,7 +94,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.debug("NukiSmartLockHandler:initialize()");
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
+        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
         BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
                 .getBridgeLockState(nukiId);
         if (bridgeLockStateResponse.getStatus() == 200) {
@@ -129,9 +133,13 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         logger.debug("NukiSmartLockHandler:handleCommand({}, {})", channelUID, command);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
+=======
+        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
         if (command.equals(RefreshType.REFRESH)) {
             BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
                     .getBridgeLockState(nukiId);
@@ -144,12 +152,16 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
         } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)
+=======
+        } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE)
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
                 && (command.equals(OnOffType.ON) || command.equals(OnOffType.OFF))) {
-            int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCKACTIONS_UNLOCK
-                    : NukiBindingConstants.LOCKACTIONS_LOCK);
+            int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCK_ACTIONS_UNLOCK
+                    : NukiBindingConstants.LOCK_ACTIONS_LOCK);
             BridgeLockActionResponse bridgeLockActionResponse = new NukiHttpClient(getBridgeConfig())
                     .getBridgeLockAction(nukiId, lockAction);
             if (bridgeLockActionResponse.getStatus() != 200) {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.smarthome.config.core.Configuration;
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
+import org.openhab.binding.nuki.dto.NukiHttpServerStatusResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ import com.google.gson.Gson;
  */
 public class NukiHttpServer extends AbstractHandler {
 
-    private final static Logger logger = LoggerFactory.getLogger(NukiHttpServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(NukiHttpServer.class);
 
     private static NukiHttpServer instance;
     private Server server;
@@ -90,8 +91,7 @@ public class NukiHttpServer extends AbstractHandler {
             logger.debug("Started new NukiHttpServer instance on PORT[{}]", configCallbackPort);
 >>>>>>> 9964fbb2e... Tweaked Logging
         } catch (Exception e) {
-            logger.error("Could not start NukiHttpServer! ERROR: {}", e.getMessage());
-            e.printStackTrace();
+            logger.error("Could not start NukiHttpServer! ERROR: {}", e.getMessage(), e);
         }
     }
 
@@ -115,8 +115,7 @@ public class NukiHttpServer extends AbstractHandler {
 >>>>>>> 9964fbb2e... Tweaked Logging
             }
         } catch (Exception e) {
-            logger.error("Could not stop NukiHttpServer! ERROR: {}", e.getMessage());
-            e.printStackTrace();
+            logger.error("Could not stop NukiHttpServer! ERROR: {}", e.getMessage(), e);
         }
     }
 
@@ -132,8 +131,7 @@ public class NukiHttpServer extends AbstractHandler {
                 requestContent.append(line);
             }
         } catch (Exception e) {
-            logger.error("Could not handle request! Message[{}]", e.getMessage());
-            e.printStackTrace();
+            logger.error("Could not handle request! Message[{}]", e.getMessage(), e);
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -149,7 +147,8 @@ public class NukiHttpServer extends AbstractHandler {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
-        response.getWriter().println("{\"status\":\"OK\"}");
+        String responseJson = new Gson().toJson(new NukiHttpServerStatusResponseDto("OK"));
+        response.getWriter().println(responseJson);
         response.flushBuffer();
         listener.handleBridgeLockStateChange(bridgeApiLockStateRequestDto);
     }

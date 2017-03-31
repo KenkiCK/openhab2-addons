@@ -1,14 +1,14 @@
 # Nuki Binding
 
 This is the binding for the [Nuki Smart Lock](https://nuki.io).  
-This binding allows you to integrate, view, control and configure the Nuki Bridge and Nuki Smart Locks in the OpenHAB2 environment.  
+This binding allows you to integrate, view, control and configure the Nuki Bridge and Nuki Smart Locks in the openHAB2 environment.  
 **Please note:** A [Nuki Bridge](https://nuki.io/en/bridge/) and a [Nuki Smart Lock](https://nuki.io/en/smart-lock/) or the [Nuki Combo](https://nuki.io/en/shop/nuki-combo/) is needed for this binding to work correctly.
 
 ## Supported Bridges
 
 This binding was tested with the [Nuki Bridge](https://nuki.io/en/bridge/).  
 It might also work with the [Nuki Software Bridge](https://play.google.com/store/apps/details?id=io.nuki.bridge&hl=en) - Feedback is really appreciated!  
-**Please note:** At the moment you still need to configure the callback URL on the Nuki Bridge to point to your OpenHAB2 server. See [Bridge HTTP-API](https://nuki.io/de/api/), Section */callback* and */callback/add*.  
+**Please note:** At the moment you still need to configure the callback URL on the Nuki Bridge to point to your openHAB2 server. See [Bridge HTTP-API](https://nuki.io/de/api/), Section */callback* and */callback/add*.  
 
 
 ## Supported Things
@@ -34,7 +34,7 @@ The Port on which the Nuki Bridge REST API runs.
 The API Token configured via the Nuki App when enabling the API/IFTTT.
 
 - **Callback Port** (required)  
-The port on the OpenHAB server to which the Nuki Bridge sends Lock State changes.
+The port on the openHAB server to which the Nuki Bridge sends Lock State changes.
 
 The syntax for a bridge is:
 ```
@@ -55,8 +55,8 @@ Thing smartLock <UNIQUENAME> "<DISPLAYNAME>" @ "<LOCATION>" [ <CONFIGURATION_PAR
 ### Manual configuration of Bridge and Thing (.things file)
 To manually configure a Nuki Bridge and a Nuki Smart Lock in your .items file you can do the following:
 ```
-Bridge nuki:bridge:NB1 [ IP="192.168.0.50", PORT=8080, APITOKEN="1a2b3c4d5e", CALLBACK_PORT=8081 ] {
-  Thing smartLock SL1 [ NUKIID="123456789" ]
+Bridge nuki:bridge:NB1 [ ip="192.168.0.50", port=8080, apiToken="1a2b3c4d5e", callbackPort=8081 ] {
+  Thing smartLock SL1 [ nukiId="123456789" ]
 }
 ```
 

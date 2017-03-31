@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
 <<<<<<< HEAD
 public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServerListener {
 
-    private final static Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
 
     private NukiHttpServer nukiHttpServer;
 
@@ -183,9 +183,9 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         Bridge bridge = this.getThing();
         List<Thing> things = bridge.getThings();
         for (Thing thing : things) {
-            String nukiIdThing = (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKIID);
+            String nukiIdThing = (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID);
             if (nukiId.equals(nukiIdThing)) {
-                Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE);
+                Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE);
                 State state = bridgeApiLockStateRequestDto.getState() == 1 ? OnOffType.ON : OnOffType.OFF;
                 thing.getHandler().handleUpdate(channel.getUID(), state);
                 logger.trace("Updated Nuki Smart Lock[{}] to state[{}]", nukiId, state);

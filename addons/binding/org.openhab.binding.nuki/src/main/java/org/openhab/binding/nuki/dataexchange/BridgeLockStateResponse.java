@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,11 +16,11 @@ import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
  */
 public class BridgeLockStateResponse extends NukiBaseResponse {
 
+    private BridgeApiLockStateDto bridgeLockState;
+
     public BridgeLockStateResponse(int status, String message) {
         super(status, message);
     }
-
-    private BridgeApiLockStateDto bridgeLockState;
 
     public BridgeApiLockStateDto getBridgeLockState() {
         return bridgeLockState;

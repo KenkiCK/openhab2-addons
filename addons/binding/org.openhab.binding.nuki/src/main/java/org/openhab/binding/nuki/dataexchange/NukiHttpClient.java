@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016 by the respective copyright holders.
+ * Copyright (c) 2014-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,7 +40,7 @@ import com.google.gson.Gson;
  */
 public class NukiHttpClient {
 
-    private final static Logger logger = LoggerFactory.getLogger(NukiHttpClient.class);
+    private final Logger logger = LoggerFactory.getLogger(NukiHttpClient.class);
 
     private HttpClient httpClient;
     private Configuration configuration;
@@ -56,7 +56,7 @@ public class NukiHttpClient {
 >>>>>>> 9964fbb2e... Tweaked Logging
         this.configuration = configuration;
         this.httpClient = new HttpClient();
-        long connectTimeout = NukiBindingConstants.CLIENT_CONNECTTIMEOUT;
+        long connectTimeout = NukiBindingConstants.CLIENT_CONNECT_TIMEOUT;
         httpClient.setConnectTimeout(connectTimeout);
     }
 
@@ -77,8 +77,7 @@ public class NukiHttpClient {
             logger.trace("Started httpClient[{}]", httpClient);
 >>>>>>> c32d3861e... Using unique instance of NukiHttpClient for each request
         } catch (Exception e) {
-            logger.error("Could not start NukiHttpClient! ERROR: {}", e.getMessage());
-            e.printStackTrace();
+            logger.error("Could not start NukiHttpClient! ERROR: {}", e.getMessage(), e);
         }
     }
 
@@ -92,6 +91,7 @@ public class NukiHttpClient {
                 logger.trace("Stopped NukiHttpClient[{}]", httpClient);
             }
         } catch (Exception e) {
+<<<<<<< HEAD
             logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
 =======
@@ -112,6 +112,9 @@ public class NukiHttpClient {
             logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
+=======
+            logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage(), e);
+>>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
         }
     }
 
@@ -126,7 +129,7 @@ public class NukiHttpClient {
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
         String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
-        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
+        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_API_TOKEN);
         String uri = String.format(NukiBindingConstants.URI_INFO, configIp, configPort, configApiToken);
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -246,7 +249,7 @@ public class NukiHttpClient {
         logger.debug("NukiHttpClient:getBridgeLockState({})", nukiId);
         String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
-        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
+        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_API_TOKEN);
         String uri = String.format(NukiBindingConstants.URI_LOCKSTATE, configIp, configPort, configApiToken, nukiId);
         logger.trace("uri[{}]", uri);
         try {
@@ -286,7 +289,7 @@ public class NukiHttpClient {
         logger.debug("NukiHttpClient:getBridgeLockAction({}, {})", nukiId, lockAction);
         String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
-        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
+        String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_API_TOKEN);
         String uri = String.format(NukiBindingConstants.URI_LOCKACTION, configIp, configPort, configApiToken, nukiId,
                 lockAction);
         logger.trace("uri[{}]", uri);

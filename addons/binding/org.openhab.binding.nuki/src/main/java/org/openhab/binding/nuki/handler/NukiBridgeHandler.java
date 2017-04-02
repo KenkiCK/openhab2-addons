@@ -186,7 +186,8 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
             String nukiIdThing = (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID);
             if (nukiId.equals(nukiIdThing)) {
                 Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE);
-                State state = bridgeApiLockStateRequestDto.getState() == 1 ? OnOffType.ON : OnOffType.OFF;
+                State state = bridgeApiLockStateRequestDto.getState() == NukiBindingConstants.LOCK_STATES_LOCKED
+                        ? OnOffType.ON : OnOffType.OFF;
                 thing.getHandler().handleUpdate(channel.getUID(), state);
                 logger.trace("Updated Nuki Smart Lock[{}] to state[{}]", nukiId, state);
                 return;

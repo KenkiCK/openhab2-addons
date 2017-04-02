@@ -118,6 +118,15 @@ public class NukiBindingConstants {
 =======
     public static final int LOCK_ACTIONS_UNLOCK = 1;
     public static final int LOCK_ACTIONS_LOCK = 2;
+<<<<<<< HEAD
 >>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
 
+=======
+    public static final int LOCK_ACTIONS_UNLATCH = 3;
+    public static final int LOCK_ACTIONS_LOCK_N_GO = 4;
+    public static final int LOCK_ACTIONS_LOCK_N_GO_UNLATCH = 5;
+    // Nuki Bridge API Lock States
+    public static final int LOCK_STATES_LOCKED = 1;
+    public static final int LOCK_STATES_UNLOCKED = 3;
+>>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
 }

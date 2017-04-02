@@ -12,7 +12,7 @@ package org.openhab.binding.nuki.dataexchange;
  *
  * @author Markus Katter - Initial contribution
  */
-public abstract class NukiBaseResponse {
+public class NukiBaseResponse {
 
 <<<<<<< HEAD
 <<<<<<< HEAD

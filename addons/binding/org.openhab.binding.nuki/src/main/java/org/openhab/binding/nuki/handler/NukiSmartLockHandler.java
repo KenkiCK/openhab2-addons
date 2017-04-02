@@ -99,8 +99,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
                     .getBridgeLockState(nukiId);
             if (bridgeLockStateResponse.getStatus() == 200) {
-                updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
-                        "Nuki Smart Lock is " + bridgeLockStateResponse.getBridgeLockState().getStateName());
+                updateStatus(ThingStatus.ONLINE);
             } else {
                 updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
                         bridgeLockStateResponse.getMessage());

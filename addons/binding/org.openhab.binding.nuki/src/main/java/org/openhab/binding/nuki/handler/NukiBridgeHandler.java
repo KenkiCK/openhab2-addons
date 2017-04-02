@@ -108,8 +108,7 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
         nukiHttpServer = NukiHttpServer.getInstance(this.getConfig(), this);
         BridgeInfoResponse bridgeInfoResponse = new NukiHttpClient(this.getConfig()).getBridgeInfo();
         if (bridgeInfoResponse.getStatus() == 200) {
-            updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
-                    "Found " + bridgeInfoResponse.getBridgeInfo().getScanResults().size() + " Nuki Smart Locks.");
+            updateStatus(ThingStatus.ONLINE);
         } else {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
         }

@@ -14,9 +14,6 @@ package org.openhab.binding.nuki.handler;
  */
 public class NukiBridgeHandlerNotAvailableException extends Exception {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2791902845507557593L;
 
     public NukiBridgeHandlerNotAvailableException(String message) {

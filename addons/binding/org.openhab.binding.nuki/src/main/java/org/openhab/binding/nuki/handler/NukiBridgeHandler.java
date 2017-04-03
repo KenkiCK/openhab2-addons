@@ -9,21 +9,21 @@ package org.openhab.binding.nuki.handler;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
+=======
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 import org.eclipse.smarthome.core.thing.Bridge;
-import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
-import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
 import org.eclipse.smarthome.core.types.Command;
-import org.eclipse.smarthome.core.types.State;
-import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dataexchange.BridgeInfoResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
+<<<<<<< HEAD
 import org.openhab.binding.nuki.dataexchange.NukiHttpServer;
 import org.openhab.binding.nuki.dataexchange.NukiHttpServerListener;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
@@ -57,6 +57,8 @@ import org.openhab.binding.nuki.dataexchange.NukiHttpServer;
 import org.openhab.binding.nuki.dataexchange.NukiHttpServerListener;
 import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
+=======
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,11 +70,13 @@ import org.slf4j.LoggerFactory;
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServerListener {
+=======
+public class NukiBridgeHandler extends BaseBridgeHandler {
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 
     private final Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
-
-    private NukiHttpServer nukiHttpServer;
 
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
@@ -105,7 +109,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.debug("NukiBridgeHandler:initialize()");
-        nukiHttpServer = NukiHttpServer.getInstance(this.getConfig(), this);
         BridgeInfoResponse bridgeInfoResponse = new NukiHttpClient(this.getConfig()).getBridgeInfo();
         if (bridgeInfoResponse.getStatus() == 200) {
             updateStatus(ThingStatus.ONLINE);
@@ -172,27 +175,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
     @Override
     public void dispose() {
         logger.debug("NukiBridgeHandler:dispose");
-        nukiHttpServer.stopServer();
-    }
-
-    @Override
-    public void handleBridgeLockStateChange(BridgeApiLockStateRequestDto bridgeApiLockStateRequestDto) {
-        logger.debug("NukiBridgeHandler:handleBridgeLockStateChange({})", bridgeApiLockStateRequestDto);
-        String nukiId = String.valueOf(bridgeApiLockStateRequestDto.getNukiId());
-        Bridge bridge = this.getThing();
-        List<Thing> things = bridge.getThings();
-        for (Thing thing : things) {
-            String nukiIdThing = (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID);
-            if (nukiId.equals(nukiIdThing)) {
-                Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE);
-                State state = bridgeApiLockStateRequestDto.getState() == NukiBindingConstants.LOCK_STATES_LOCKED
-                        ? OnOffType.ON : OnOffType.OFF;
-                thing.getHandler().handleUpdate(channel.getUID(), state);
-                logger.trace("Updated Nuki Smart Lock[{}] to state[{}]", nukiId, state);
-                return;
-            }
-        }
-        logger.error("Could not find and update Smart Lock[{}]", nukiId);
     }
 
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize

@@ -37,6 +37,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
             <parameter name="CALLBACK_PORT" type="integer" required="true">
@@ -82,6 +83,8 @@
 =======
 =======
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
+=======
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
         </config-description>
     </bridge-type>
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
@@ -95,6 +98,7 @@
         <description>Nuki Smart Lock which is paired via Bluetooth to a Nuki Bridge.</description>
         <channels>
             <channel id="smartLockOpenClose" typeId="channelTypeSmartLockOpenClose"/>
+            <channel  id="smartLockUnlatchClose" typeId="channelTypeSmartLockUnlatchClose"/>
         </channels>
         <config-description>
             <parameter name="nukiId" type="text" required="true">
@@ -118,6 +122,12 @@
         <label>Nuki Smart Lock Open/Close</label>
         <description>Nuki Smart Lock channel to open or close the door.</description>
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+    </channel-type>
+
+    <channel-type id="channelTypeSmartLockUnlatchClose">
+        <item-type>Switch</item-type>
+        <label>Nuki Smart Lock Unlatch/Close</label>
+        <description>Nuki Smart Lock channel to unlatch or close the door.</description>
     </channel-type>
 
 </thing:thing-descriptions>

@@ -95,21 +95,26 @@ public class NukiBindingConstants {
     public final static String CHANNEL_SMARTLOCKOPENCLOSE = "smartLockOpenClose";
 =======
     public static final String CHANNEL_SMARTLOCK_OPEN_CLOSE = "smartLockOpenClose";
+<<<<<<< HEAD
 >>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
+=======
+    public static final String CHANNEL_SMARTLOCK_UNLATCH_CLOSE = "smartLockUnlatchClose";
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 
     // List of all config-description parameters
     public static final String CONFIG_IP = "ip";
     public static final String CONFIG_PORT = "port";
     public static final String CONFIG_API_TOKEN = "apiToken";
     public static final String CONFIG_NUKI_ID = "nukiId";
-    public static final String CONFIG_CALLBACK_PORT = "callbackPort";
 
     // Nuki Bridge API REST Endpoints
     public static final String URI_INFO = "http://%s:%s/info?token=%s";
     public static final String URI_LOCKSTATE = "http://%s:%s/lockState?token=%s&nukiId=%s";
     public static final String URI_LOCKACTION = "http://%s:%s/lockAction?token=%s&nukiId=%s&action=%s";
+
     // NukiHttpClient
     public static final long CLIENT_CONNECT_TIMEOUT = 5000;
+
     // Nuki Bridge API Lock Actions
 <<<<<<< HEAD
     public final static int LOCKACTIONS_UNLOCK = 1;
@@ -125,8 +130,13 @@ public class NukiBindingConstants {
     public static final int LOCK_ACTIONS_UNLATCH = 3;
     public static final int LOCK_ACTIONS_LOCK_N_GO = 4;
     public static final int LOCK_ACTIONS_LOCK_N_GO_UNLATCH = 5;
+
     // Nuki Bridge API Lock States
     public static final int LOCK_STATES_LOCKED = 1;
     public static final int LOCK_STATES_UNLOCKED = 3;
+<<<<<<< HEAD
 >>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
+=======
+
+>>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 }

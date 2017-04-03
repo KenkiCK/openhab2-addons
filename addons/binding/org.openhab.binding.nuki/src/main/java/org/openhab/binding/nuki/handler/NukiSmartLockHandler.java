@@ -217,14 +217,23 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                     logger.error("Could not refresh Nuki Smart Lock[{}]! Message: {}", nukiId,
                             bridgeLockStateResponse.getMessage());
                 }
-            } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE)
-                    && command instanceof OnOffType) {
-                int lockAction = (command == OnOffType.OFF ? NukiBindingConstants.LOCK_ACTIONS_UNLOCK
-                        : NukiBindingConstants.LOCK_ACTIONS_LOCK);
-                BridgeLockActionResponse bridgeLockActionResponse = new NukiHttpClient(getBridgeConfig())
-                        .getBridgeLockAction(nukiId, lockAction);
-                if (bridgeLockActionResponse.getStatus() != 200) {
-                    logger.error("Could not execute command[{}] on Nuki Smart Lock[{}]", command, nukiId);
+            } else if (command instanceof OnOffType) {
+                int lockAction = -1;
+                if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE)) {
+                    lockAction = (command == OnOffType.OFF ? NukiBindingConstants.LOCK_ACTIONS_UNLOCK
+                            : NukiBindingConstants.LOCK_ACTIONS_LOCK);
+                } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCK_UNLATCH_CLOSE)) {
+                    lockAction = (command == OnOffType.OFF ? NukiBindingConstants.LOCK_ACTIONS_UNLATCH
+                            : NukiBindingConstants.LOCK_ACTIONS_LOCK);
+                } else {
+                    logger.warn("ChannelUID{} for command{} not implemented!", channelUID, command);
+                }
+                if (lockAction != -1) {
+                    BridgeLockActionResponse bridgeLockActionResponse = new NukiHttpClient(getBridgeConfig())
+                            .getBridgeLockAction(nukiId, lockAction);
+                    if (bridgeLockActionResponse.getStatus() != 200) {
+                        logger.error("Could not execute command[{}] on Nuki Smart Lock[{}]", command, nukiId);
+                    }
                 }
             } else {
                 logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);

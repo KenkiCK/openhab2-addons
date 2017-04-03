@@ -8,8 +8,6 @@ This binding allows you to integrate, view, control and configure the Nuki Bridg
 
 This binding was tested with the [Nuki Bridge](https://nuki.io/en/bridge/).  
 It might also work with the [Nuki Software Bridge](https://play.google.com/store/apps/details?id=io.nuki.bridge&hl=en) - Feedback is really appreciated!  
-**Please note:** At the moment you still need to configure the callback URL on the Nuki Bridge to point to your openHAB2 server. See [Bridge HTTP-API](https://nuki.io/de/api/), Section */callback* and */callback/add*.  
-
 
 ## Supported Things
 
@@ -21,7 +19,21 @@ There is no automatic discovery yet implemented.
 
 ## Configuration
 
-### Bridge Configuration
+It is absolutely recommended to configure static IP addresses for both, the openHAB2 server and the Nuki Bridge!
+
+### Nuki Bridge Configuration
+
+**Please note:** At the moment you still need to manually configure a callback URL on the Nuki Bridge which points to your openHAB2 server.  
+See [Bridge HTTP-API](https://nuki.io/en/api/), Section */callback* and */callback/add*.  
+
+For example, if your openHAB2 server's IP address is 192.168.0.100 and your Nuki Bridge's IP address is 192.168.0.50, add a callback URI to **http://192.168.0.100/nuki/bcb** on the Nuki Bridge via the [Bridge HTTP-API](https://nuki.io/en/api/) like this:
+```
+http://192.168.0.50:8080/callback/add?token=1a2b3c4d5e&url=http%3A%2F%2F192.168.0.100%3A8080%2Fnuki%2Fbcb
+```
+The callback URL has to be /nuki/bcb
+
+
+### Bridge Configuration (in openHAB2)
 
 There are several configuration parameters for a bridge:
 - **IP Address** (required)  
@@ -32,9 +44,6 @@ The Port on which the Nuki Bridge REST API runs.
 
 - **API Token** (required)  
 The API Token configured via the Nuki App when enabling the API/IFTTT.
-
-- **Callback Port** (required)  
-The port on the openHAB server to which the Nuki Bridge sends Lock State changes.
 
 The syntax for a bridge is:
 ```
@@ -55,17 +64,30 @@ Thing smartLock <UNIQUENAME> "<DISPLAYNAME>" @ "<LOCATION>" [ <CONFIGURATION_PAR
 ### Manual configuration of Bridge and Thing (.things file)
 To manually configure a Nuki Bridge and a Nuki Smart Lock in your .items file you can do the following:
 ```
-Bridge nuki:bridge:NB1 [ ip="192.168.0.50", port=8080, apiToken="1a2b3c4d5e", callbackPort=8081 ] {
-  Thing smartLock SL1 [ nukiId="123456789" ]
+Bridge nuki:bridge:NB1 [ ip="192.168.0.50", port=8080, apiToken="1a2b3c4d5e" ] {
+    Thing smartLock SL1 [ nukiId="123456789" ]
 }
+
 ```
 
 ### Items Configuration (.items file)
 In the .items file you can define e.g. a Switch.  
 Following the Manual configuration example from above you can do the following:
 ```
-Switch Frontdoor "Frontdoor" <switch> { channel="nuki:smartLock:NB1:SL1:smartLockOpenClose" }
+Switch Frontdoor_OpenClose      "Frontdoor (Open / Close)"      <switch> { channel="nuki:smartLock:NB1:SL1:smartLockOpenClose" }
+Switch Frontdoor_UnlatchClose   "Frontdoor (Unlatch / Close)"   <switch> { channel="nuki:smartLock:NB1:SL1:smartLockUnlatchClose" }
 ```
+
+### Sitemap Configuration (.sitemap file)
+In the .sitemap file you can define e.g. a Switch.  
+Following the Manual configuration example from above you can do the following:
+```
+sitemap nuki label="Nuki Smart Lock" {
+    Switch item=Frontdoor_OpenClose    label="Frontdoor (Open / Close)"
+    Switch item=Frontdoor_UnlatchClose label="Frontdoor (Unlatch / Close)"
+}
+```
+
 
 ## Troubleshooting, Debugging and Tracing
 

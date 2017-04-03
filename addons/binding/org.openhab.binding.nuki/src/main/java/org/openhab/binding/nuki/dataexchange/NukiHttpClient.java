@@ -265,7 +265,7 @@ public class NukiHttpClient {
     }
 
     public BridgeInfoResponse getBridgeInfo() {
-        logger.debug("NukiHttpClient:getBridgeInfo");
+        logger.debug("NukiHttpClient:getBridgeInfo()");
         String uri = prepareUri(NukiBindingConstants.URI_INFO);
 >>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
         try {

@@ -105,7 +105,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                         bridgeLockStateResponse.getMessage());
             }
         } catch (NukiBridgeHandlerNotAvailableException e) {
-            logger.error(e.getMessage());
+            logger.error("ERROR: {}", e.getMessage(), e);
         }
 =======
         logger.debug("NukiSmartLockHandler:initialize");
@@ -239,8 +239,12 @@ public class NukiSmartLockHandler extends BaseThingHandler {
                 logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);
             }
         } catch (NukiBridgeHandlerNotAvailableException e) {
+<<<<<<< HEAD
             logger.error(e.getMessage());
 >>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
+=======
+            logger.error("ERROR: {}", e.getMessage(), e);
+>>>>>>> d275f0cd7... Fixed Travis CI build error (ERROR found by findbugs)
         }
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
     }

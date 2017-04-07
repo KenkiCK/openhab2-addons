@@ -113,7 +113,7 @@ public class NukiApiServlet extends HttpServlet {
                 nukiIdThing = thing.getConfiguration().containsKey(NukiBindingConstants.CONFIG_NUKI_ID)
                         ? (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID) : null;
                 if (nukiIdThing != null && nukiIdThing.equals(nukiId)) {
-                    logger.trace("Processing ThingUID[{}]", thing.getUID());
+                    logger.debug("Processing ThingUID[{}]", thing.getUID());
                     Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE);
                     if (channel != null) {
                         thing.getHandler().handleUpdate(channel.getUID(), state);

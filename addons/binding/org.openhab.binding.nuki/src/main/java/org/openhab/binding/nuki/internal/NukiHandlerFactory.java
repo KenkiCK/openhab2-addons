@@ -79,11 +79,17 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
+        boolean isSupported = SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
+        logger.trace("NukiHandlerFactory:supportsThingType({}) - isSupported[{}]", thingTypeUID, isSupported);
+        if (!isSupported) {
+            logger.warn("ThingType[{}] is not supported! Please check your .things configuration!", thingTypeUID);
+        }
+        return isSupported;
     }
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -108,6 +114,9 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 =======
         logger.trace("ThingHandler:createHandler({})", thing);
 >>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
+=======
+        logger.trace("NukiHandlerFactory:createHandler({})", thing);
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (NukiBindingConstants.THING_TYPE_BRIDGE_UIDS.contains(thingTypeUID)) {
@@ -115,7 +124,7 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
         } else if (NukiBindingConstants.THING_TYPE_SMARTLOCK_UIDS.contains(thingTypeUID)) {
             return new NukiSmartLockHandler(thing);
         }
-        logger.error("No valid Handler found for Thing[{}]!", thingTypeUID);
+        logger.trace("No valid Handler found for Thing[{}]!", thingTypeUID);
         return null;
     }
 

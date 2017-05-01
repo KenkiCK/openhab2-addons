@@ -15,10 +15,11 @@
         <config-description>
             <parameter name="ip" type="text" required="true">
                 <label>IP Address</label>
-                <description>The IP Address of the Nuki Bridge.</description>
+                <description>The IP address of the Nuki Bridge. Look it up on your router. It is recommended to set a static IP address lease for the Nuki Bridge (and for your openHAB server too) on your router.</description>
             </parameter>
             <parameter name="port" type="integer" required="true">
                 <label>Port</label>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                 <description>The Port on which the Nuki Bridge REST API runs.</description>
@@ -28,11 +29,14 @@
 =======
                 <description>The Port on which the Nuki Bridge REST API runs.</description>
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
+=======
+                <description>The Port which you configured during Initial Bridge setup (https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).</description>
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
                 <default>8080</default>
             </parameter>
             <parameter name="apiToken" type="text" required="true">
                 <label>API Token</label>
-                <description>The API Token configured via the Nuki App when enabling the API/IFTTT.</description>
+                <description>The API Token which you configured during Initial Bridge setup (https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).</description>
             </parameter>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -90,20 +94,26 @@
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
 
     <!-- Nuki Smart Lock (Thing Type) -->
-    <thing-type id="smartLock">
+    <thing-type id="smartlock">
         <supported-bridge-type-refs>
-            <bridge-type-ref id="bridge"/>
+            <bridge-type-ref id="bridge" />
         </supported-bridge-type-refs>
         <label>Nuki Smart Lock</label>
         <description>Nuki Smart Lock which is paired via Bluetooth to a Nuki Bridge.</description>
         <channels>
-            <channel id="smartLockOpenClose" typeId="channelTypeSmartLockOpenClose"/>
-            <channel  id="smartLockUnlatchClose" typeId="channelTypeSmartLockUnlatchClose"/>
+            <channel id="unlock" typeId="smartlockUnlock" />
+            <channel id="lockAction" typeId="smartlockLockAction" />
+            <channel id="lowBattery" typeId="system.low-battery" />
         </channels>
         <config-description>
             <parameter name="nukiId" type="text" required="true">
                 <label>Nuki ID</label>
-                <description>The ID of the Nuki Smart Lock.</description>
+                <description>The ID of the Nuki Smart Lock. Get it through the Bridge HTTP-API (https://nuki.io/en/api/), Endpoint */list*.</description>
+            </parameter>
+            <parameter name="unlatch" type="boolean" required="true">
+                <label>Unlatch</label>
+                <description>If switched to On (or set to true) the Nuki Smart Lock will unlock the door but then also automatically pull the latch of the door lock. Usually, if the door hinges are correctly adjusted, the door will then swing open.</description>
+                <default>false</default>
             </parameter>
         </config-description>
     </thing-type>
@@ -117,17 +127,39 @@
 >>>>>>> 32e822771... Initial commit of the Nuki Binding
 =======
     <!-- Channel Type -->
-    <channel-type id="channelTypeSmartLockOpenClose">
+    <channel-type id="smartlockUnlock">
         <item-type>Switch</item-type>
+<<<<<<< HEAD
         <label>Nuki Smart Lock Open/Close</label>
         <description>Nuki Smart Lock channel to open or close the door.</description>
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
+=======
+        <label>Nuki Smart Lock Unlock / Lock</label>
+        <description>Use this channel with a Switch Item to unlock and lock the door. Configure "Unlatch" to true if your Nuki Smart Lock is mounted on a door lock with a knob on the outside.</description>
+        <category>Door</category>
+        <state>
+            <options>
+                <option value="OFF">Unlocks the door</option>
+                <option value="ON">Locks the door</option>
+            </options>
+        </state>
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
     </channel-type>
 
-    <channel-type id="channelTypeSmartLockUnlatchClose">
-        <item-type>Switch</item-type>
-        <label>Nuki Smart Lock Unlatch/Close</label>
-        <description>Nuki Smart Lock channel to unlatch or close the door.</description>
+    <channel-type id="smartlockLockAction">
+        <item-type>Number</item-type>
+        <label>Nuki Smart Lock Lock Actions</label>
+        <description>Use this channel if you want to execute other supported lock actions or to display the current lock state. See README.md (https://github.com/openhab/openhab2-addons/tree/master/addons/binding/org.openhab.binding.nuki) for supported lock actions and lock states.</description>
+        <category>Door</category>
+        <state>
+            <options>
+                <option value="2">Unlock</option>
+                <option value="7">Unlatch</option>
+                <option value="1002">Lock 'n' go</option>
+                <option value="1007">Lock 'n' go with unlatch</option>
+                <option value="4">Lock</option>
+            </options>
+        </state>
     </channel-type>
 
 </thing:thing-descriptions>

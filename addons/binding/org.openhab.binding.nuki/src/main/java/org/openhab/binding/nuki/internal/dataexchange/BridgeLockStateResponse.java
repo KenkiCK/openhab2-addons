@@ -5,9 +5,9 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.openhab.binding.nuki.dataexchange;
+package org.openhab.binding.nuki.internal.dataexchange;
 
-import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
+import org.openhab.binding.nuki.internal.dto.BridgeApiLockStateDto;
 
 /**
  * The {@link BridgeLockStateResponse} class wraps {@link BridgeApiLockStateDto} class.
@@ -20,6 +20,10 @@ public class BridgeLockStateResponse extends NukiBaseResponse {
 
     public BridgeLockStateResponse(int status, String message) {
         super(status, message);
+    }
+
+    public BridgeLockStateResponse(NukiBaseResponse nukiBaseResponse) {
+        super(nukiBaseResponse.getStatus(), nukiBaseResponse.getMessage());
     }
 
     public BridgeApiLockStateDto getBridgeLockState() {

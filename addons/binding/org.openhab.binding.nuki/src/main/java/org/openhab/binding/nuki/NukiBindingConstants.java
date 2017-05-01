@@ -81,12 +81,13 @@ public class NukiBindingConstants {
 
     // List of all Thing Type UIDs
     public static final ThingTypeUID THING_TYPE_BRIDGE = new ThingTypeUID(BINDING_ID, "bridge");
-    public static final ThingTypeUID THING_TYPE_SMARTLOCK = new ThingTypeUID(BINDING_ID, "smartLock");
+    public static final ThingTypeUID THING_TYPE_SMARTLOCK = new ThingTypeUID(BINDING_ID, "smartlock");
 
     public static final Set<ThingTypeUID> THING_TYPE_BRIDGE_UIDS = Collections.singleton(THING_TYPE_BRIDGE);
     public static final Set<ThingTypeUID> THING_TYPE_SMARTLOCK_UIDS = Collections.singleton(THING_TYPE_SMARTLOCK);
 
     // List of all Channel ids
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     public final static String CHANNEL_1 = "channel1";
@@ -100,12 +101,18 @@ public class NukiBindingConstants {
 =======
     public static final String CHANNEL_SMARTLOCK_UNLATCH_CLOSE = "smartLockUnlatchClose";
 >>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
+=======
+    public static final String CHANNEL_SMARTLOCK_UNLOCK = "unlock";
+    public static final String CHANNEL_SMARTLOCK_LOCK_ACTION = "lockAction";
+    public static final String CHANNEL_SMARTLOCK_LOW_BATTERY = "lowBattery";
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 
     // List of all config-description parameters
     public static final String CONFIG_IP = "ip";
     public static final String CONFIG_PORT = "port";
     public static final String CONFIG_API_TOKEN = "apiToken";
     public static final String CONFIG_NUKI_ID = "nukiId";
+    public static final String CONFIG_UNLATCH = "unlatch";
 
     // Nuki Bridge API REST Endpoints
     public static final String URI_INFO = "http://%s:%s/info?token=%s";
@@ -132,11 +139,25 @@ public class NukiBindingConstants {
     public static final int LOCK_ACTIONS_LOCK_N_GO_UNLATCH = 5;
 
     // Nuki Bridge API Lock States
+    public static final int LOCK_STATES_UNCALIBRATED = 0;
     public static final int LOCK_STATES_LOCKED = 1;
+    public static final int LOCK_STATES_UNLOCKING = 2;
     public static final int LOCK_STATES_UNLOCKED = 3;
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
 =======
+=======
+    public static final int LOCK_STATES_LOCKING = 4;
+    public static final int LOCK_STATES_UNLATCHED = 5;
+    public static final int LOCK_STATES_UNLOCKED_LOCKNGO = 6;
+    public static final int LOCK_STATES_UNLATCHING = 7;
+    public static final int LOCK_STATES_MOTOR_BLOCKED = 254;
+    public static final int LOCK_STATES_UNDEFINED = 255;
+
+    // Nuki Binding additional Lock States
+    public static final int LOCK_STATES_UNLOCKING_LOCK_N_GO = 1002;
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 
 >>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 }

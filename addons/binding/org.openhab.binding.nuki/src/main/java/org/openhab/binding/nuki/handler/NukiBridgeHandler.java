@@ -10,17 +10,22 @@ package org.openhab.binding.nuki.handler;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
 =======
 >>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
+=======
+import org.eclipse.jetty.http.HttpStatus;
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
 import org.eclipse.smarthome.core.types.Command;
+<<<<<<< HEAD
 import org.openhab.binding.nuki.dataexchange.BridgeInfoResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
 <<<<<<< HEAD
@@ -59,6 +64,10 @@ import org.openhab.binding.nuki.dto.BridgeApiLockStateRequestDto;
 >>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
 =======
 >>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
+=======
+import org.openhab.binding.nuki.internal.dataexchange.BridgeInfoResponse;
+import org.openhab.binding.nuki.internal.dataexchange.NukiHttpClient;
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +86,8 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
 >>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
 
     private final Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+
+    private NukiHttpClient nukiHttpClient;
 
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
@@ -104,8 +115,13 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 >>>>>>> 9964fbb2e... Tweaked Logging
     }
 
+    public NukiHttpClient getNukiHttpClient() {
+        return nukiHttpClient;
+    }
+
     @Override
     public void initialize() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.debug("NukiBridgeHandler:initialize()");
@@ -134,6 +150,9 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
         }
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
+=======
+        scheduler.execute(() -> initializeHandler());
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
     }
 
     @Override
@@ -174,7 +193,20 @@ public class NukiBridgeHandler extends BaseBridgeHandler implements NukiHttpServ
 =======
     @Override
     public void dispose() {
-        logger.debug("NukiBridgeHandler:dispose");
+        logger.debug("NukiBridgeHandler:dispose()");
+        nukiHttpClient.stopClient();
+        // nukiHttpClient = null;
+    }
+
+    private void initializeHandler() {
+        logger.debug("NukiBridgeHandler:initializeHandler()");
+        nukiHttpClient = new NukiHttpClient(getConfig());
+        BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
+        if (bridgeInfoResponse.getStatus() == HttpStatus.OK_200) {
+            updateStatus(ThingStatus.ONLINE);
+        } else {
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
+        }
     }
 
 >>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize

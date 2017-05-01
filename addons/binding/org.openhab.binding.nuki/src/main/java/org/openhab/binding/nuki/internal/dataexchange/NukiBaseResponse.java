@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.openhab.binding.nuki.dataexchange;
+package org.openhab.binding.nuki.internal.dataexchange;
 
 /**
  * The {@link NukiBaseResponse} class is the base class for API Responses.

@@ -5,20 +5,28 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.openhab.binding.nuki.dto;
+package org.openhab.binding.nuki.internal.dto;
 
 /**
- * The {@link BridgeApiLockStateDto} class defines the Data Transfer Object (POJO) for the Nuki Bridge API /lockState
- * endpoint.
+ * The {@link BridgeApiLockStateRequestDto} class defines the Data Transfer Object (POJO) which is send from the Nuki
+ * Bridge to the openHAB Server.
  *
  * @author Markus Katter - Initial contribution
  */
-public class BridgeApiLockStateDto {
+public class BridgeApiLockStateRequestDto {
 
+    private int nukiId;
     private int state;
     private String stateName;
     private boolean batteryCritical;
-    private boolean success;
+
+    public int getNukiId() {
+        return nukiId;
+    }
+
+    public void setNukiId(int nukiId) {
+        this.nukiId = nukiId;
+    }
 
     public int getState() {
         return state;
@@ -42,14 +50,6 @@ public class BridgeApiLockStateDto {
 
     public void setBatteryCritical(boolean batteryCritical) {
         this.batteryCritical = batteryCritical;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
 }

@@ -5,9 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package org.openhab.binding.nuki.dataexchange;
+package org.openhab.binding.nuki.internal.dataexchange;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -15,8 +17,10 @@ import java.util.concurrent.TimeoutException;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpResponseException;
 import org.eclipse.jetty.client.api.ContentResponse;
+import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.smarthome.config.core.Configuration;
 import org.openhab.binding.nuki.NukiBindingConstants;
+<<<<<<< HEAD:addons/binding/org.openhab.binding.nuki/src/main/java/org/openhab/binding/nuki/dataexchange/NukiHttpClient.java
 import org.openhab.binding.nuki.dto.BridgeApiInfoDto;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -30,6 +34,11 @@ import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
 =======
 import org.openhab.binding.nuki.dto.BridgeApiLockStateDto;
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
+=======
+import org.openhab.binding.nuki.internal.dto.BridgeApiInfoDto;
+import org.openhab.binding.nuki.internal.dto.BridgeApiLockActionDto;
+import org.openhab.binding.nuki.internal.dto.BridgeApiLockStateDto;
+>>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).:addons/binding/org.openhab.binding.nuki/src/main/java/org/openhab/binding/nuki/internal/dataexchange/NukiHttpClient.java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +55,7 @@ public class NukiHttpClient {
 
     private HttpClient httpClient;
     private Configuration configuration;
+    private Gson gson;
 
     public NukiHttpClient(Configuration configuration) {
 <<<<<<< HEAD
@@ -60,10 +70,12 @@ public class NukiHttpClient {
         this.httpClient = new HttpClient();
         long connectTimeout = NukiBindingConstants.CLIENT_CONNECT_TIMEOUT;
         httpClient.setConnectTimeout(connectTimeout);
+        // startClient();
+        gson = new Gson();
     }
 
-    public void startClient() {
-        logger.trace("Starting HttpClient");
+    private void startClient() {
+        logger.trace("Starting HttpClient...");
         try {
             httpClient.start();
 <<<<<<< HEAD
@@ -86,7 +98,7 @@ public class NukiHttpClient {
 <<<<<<< HEAD
 <<<<<<< HEAD
     public void stopClient() {
-        logger.trace("Stopping HttpClient");
+        logger.trace("Stopping HttpClient...");
         try {
             if (httpClient.isStarted()) {
                 httpClient.stop();
@@ -242,66 +254,88 @@ public class NukiHttpClient {
             }
         }
         String uri = String.format(uriTemplate, parameters.toArray());
-        logger.trace("uri[{}]", uri);
+        logger.trace("URI[{}]", uri);
         return uri;
     }
 
     private ContentResponse executeRequest(String uri)
             throws InterruptedException, ExecutionException, TimeoutException {
-        startClient();
+        if (httpClient.isStarting()) {
+            wait();
+        }
+        if (httpClient.isStopped()) {
+            startClient();
+        }
         ContentResponse contentResponse = httpClient.GET(uri);
         logger.trace("contentResponseAsString[{}]", contentResponse.getContentAsString());
-        stopClient();
         return contentResponse;
     }
 
     private NukiBaseResponse handleException(Exception e) {
-        if (e instanceof ExecutionException && e.getCause() instanceof HttpResponseException) {
-            return new NukiBaseResponse(((HttpResponseException) e.getCause()).getResponse().getStatus(),
-                    ((HttpResponseException) e.getCause()).getResponse().getReason());
-        } else {
-            return new NukiBaseResponse(500, e.getMessage());
+        if (e instanceof ExecutionException) {
+            if (e.getCause() instanceof HttpResponseException) {
+                HttpResponseException cause = (HttpResponseException) e.getCause();
+                int status = cause.getResponse().getStatus();
+                String reason = cause.getResponse().getReason();
+                logger.warn("HTTP Response Exception! Status[{}] - Message[{}]! Check your API Token!", status, reason);
+                return new NukiBaseResponse(status, reason);
+            } else if (e.getCause() instanceof SocketTimeoutException) {
+                logger.warn("Timeout Exception! Message[{}]! Check your IP and Port configuration!", e.getMessage());
+                return new NukiBaseResponse(HttpStatus.REQUEST_TIMEOUT_408,
+                        "Timeout Exception! Check your IP and Port configuration!");
+            } else if (e.getCause() instanceof ConnectException) {
+                logger.warn("Connect Exception! Message[{}]! Check your IP and Port configuration!", e.getMessage());
+                return new NukiBaseResponse(HttpStatus.NOT_FOUND_404,
+                        "Connect Exception! Check your IP and Port configuration!");
+            }
         }
+        logger.error("Could not handle Exception! Message[{}]", e.getMessage(), e);
+        return new NukiBaseResponse(HttpStatus.INTERNAL_SERVER_ERROR_500, e.getMessage());
     }
 
-    public BridgeInfoResponse getBridgeInfo() {
+    public synchronized BridgeInfoResponse getBridgeInfo() {
         logger.debug("NukiHttpClient:getBridgeInfo()");
         String uri = prepareUri(NukiBindingConstants.URI_INFO);
 >>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
         try {
             ContentResponse contentResponse = executeRequest(uri);
-            BridgeApiInfoDto bridgeApiInfoDto = new Gson().fromJson(contentResponse.getContentAsString(),
-                    BridgeApiInfoDto.class);
-            BridgeInfoResponse bridgeInfoResponse = new BridgeInfoResponse(contentResponse.getStatus(),
-                    contentResponse.getReason());
-            bridgeInfoResponse.setBridgeInfo(bridgeApiInfoDto);
-            return bridgeInfoResponse;
+            int status = contentResponse.getStatus();
+            String response = contentResponse.getContentAsString();
+            if (status == HttpStatus.OK_200) {
+                BridgeApiInfoDto bridgeApiInfoDto = gson.fromJson(response, BridgeApiInfoDto.class);
+                BridgeInfoResponse bridgeInfoResponse = new BridgeInfoResponse(status, contentResponse.getReason());
+                bridgeInfoResponse.setBridgeInfo(bridgeApiInfoDto);
+                return bridgeInfoResponse;
+            } else {
+                logger.warn("Could not get Bridge Info! Status[{}] - Response[{}]", status, response);
+                return new BridgeInfoResponse(status, response);
+            }
         } catch (Exception e) {
-            logger.error("Could not get Bridge Info! ERROR: {}", e.getMessage());
-            return (BridgeInfoResponse) handleException(e);
+            logger.debug("Could not get Bridge Info! Message[{}]", e.getMessage());
+            return new BridgeInfoResponse(handleException(e));
         }
     }
 
-    public BridgeLockStateResponse getBridgeLockState(String nukiId) {
+    public synchronized BridgeLockStateResponse getBridgeLockState(String nukiId) {
         logger.debug("NukiHttpClient:getBridgeLockState({})", nukiId);
         String uri = prepareUri(NukiBindingConstants.URI_LOCKSTATE, nukiId);
         try {
             ContentResponse contentResponse = executeRequest(uri);
             int status = contentResponse.getStatus();
-            if (status == 200) {
-                BridgeApiLockStateDto bridgeApiLockStateDto = new Gson().fromJson(contentResponse.getContentAsString(),
-                        BridgeApiLockStateDto.class);
+            String response = contentResponse.getContentAsString();
+            if (status == HttpStatus.OK_200) {
+                BridgeApiLockStateDto bridgeApiLockStateDto = gson.fromJson(response, BridgeApiLockStateDto.class);
                 BridgeLockStateResponse bridgeLockStateResponse = new BridgeLockStateResponse(status,
                         contentResponse.getReason());
                 bridgeLockStateResponse.setBridgeLockState(bridgeApiLockStateDto);
                 return bridgeLockStateResponse;
             } else {
-                logger.error("Nuki Smart Lock with NukiID[{}] not found!", nukiId);
-                return new BridgeLockStateResponse(status, "Nuki Smart Lock with NukiID[" + nukiId + "] not found!");
+                logger.warn("Could not get Lock State! Status[{}] - Response[{}]", status, response);
+                return new BridgeLockStateResponse(status, response);
             }
         } catch (Exception e) {
-            logger.error("Could not get Bridge Lock State! ERROR: {}", e.getMessage());
-            return (BridgeLockStateResponse) handleException(e);
+            logger.debug("Could not get Bridge Lock State! Message[{}]", e.getMessage());
+            return new BridgeLockStateResponse(handleException(e));
         }
 <<<<<<< HEAD
         return bridgeInfoResponse;
@@ -310,27 +344,26 @@ public class NukiHttpClient {
 >>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
     }
 
-    public BridgeLockActionResponse getBridgeLockAction(String nukiId, int lockAction) {
+    public synchronized BridgeLockActionResponse getBridgeLockAction(String nukiId, int lockAction) {
         logger.debug("NukiHttpClient:getBridgeLockAction({}, {})", nukiId, lockAction);
         String uri = prepareUri(NukiBindingConstants.URI_LOCKACTION, nukiId, Integer.toString(lockAction));
         try {
             ContentResponse contentResponse = executeRequest(uri);
             int status = contentResponse.getStatus();
-            if (status == 200) {
-                BridgeApiLockActionDto bridgeApiLockActionDto = new Gson()
-                        .fromJson(contentResponse.getContentAsString(), BridgeApiLockActionDto.class);
+            String response = contentResponse.getContentAsString();
+            if (status == HttpStatus.OK_200) {
+                BridgeApiLockActionDto bridgeApiLockActionDto = gson.fromJson(response, BridgeApiLockActionDto.class);
                 BridgeLockActionResponse bridgeLockActionResponse = new BridgeLockActionResponse(status,
                         contentResponse.getReason());
                 bridgeLockActionResponse.setBridgeLockAction(bridgeApiLockActionDto);
                 return bridgeLockActionResponse;
             } else {
-                logger.error("Nuki Smart Lock with NukiID[{}] not found!", nukiId);
-                return new BridgeLockActionResponse(status, "Nuki Smart Lock with NukiID[" + nukiId + "] not found!");
+                logger.warn("Could not execute Lock Action! Status[{}] - Response[{}]", status, response);
+                return new BridgeLockActionResponse(status, response);
             }
         } catch (Exception e) {
-            logger.error("Could not execute lockAction[{}] on NukiID[{}]! ERROR: {}", lockAction, nukiId,
-                    e.getMessage());
-            return (BridgeLockActionResponse) handleException(e);
+            logger.debug("Could not execute Lock Action! Message[{}]", e.getMessage());
+            return new BridgeLockActionResponse(handleException(e));
         }
     }
 

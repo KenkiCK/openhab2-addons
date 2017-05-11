@@ -79,12 +79,7 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
 >>>>>>> 2a58c752c... Nuki NoOp Implementation
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        boolean isSupported = SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
-        logger.trace("NukiHandlerFactory:supportsThingType({}) - isSupported[{}]", thingTypeUID, isSupported);
-        if (!isSupported) {
-            logger.warn("ThingType[{}] is not supported! Please check your .things configuration!", thingTypeUID);
-        }
-        return isSupported;
+        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
     }
 
     @Override

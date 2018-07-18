@@ -14,8 +14,6 @@ package org.openhab.binding.nuki.internal.dataexchange;
  */
 public class NukiBaseResponse {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     private int status;
     private String message;
 
@@ -30,30 +28,6 @@ public class NukiBaseResponse {
 
     public void setStatus(int status) {
         this.status = status;
-=======
-    private int statusCode;
-=======
-    private int status;
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-    private String message;
-
-    public NukiBaseResponse(int status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-<<<<<<< HEAD
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
-    public void setStatus(int status) {
-        this.status = status;
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
     }
 
     public String getMessage() {
@@ -64,18 +38,4 @@ public class NukiBaseResponse {
         this.message = message;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
 }

@@ -16,36 +16,16 @@ import org.openhab.binding.nuki.internal.dto.BridgeApiInfoDto;
  */
 public class BridgeInfoResponse extends NukiBaseResponse {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-=======
     private BridgeApiInfoDto bridgeInfo;
 
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
     public BridgeInfoResponse(int status, String message) {
         super(status, message);
     }
 
-<<<<<<< HEAD:addons/binding/org.openhab.binding.nuki/src/main/java/org/openhab/binding/nuki/dataexchange/BridgeInfoResponse.java
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-    private BridgeApiInfoDto bridgeInfo;
-
-=======
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
-=======
     public BridgeInfoResponse(NukiBaseResponse nukiBaseResponse) {
         super(nukiBaseResponse.getStatus(), nukiBaseResponse.getMessage());
     }
 
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).:addons/binding/org.openhab.binding.nuki/src/main/java/org/openhab/binding/nuki/internal/dataexchange/BridgeInfoResponse.java
     public BridgeApiInfoDto getBridgeInfo() {
         return bridgeInfo;
     }

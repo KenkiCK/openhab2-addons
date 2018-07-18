@@ -17,30 +17,12 @@ import java.util.List;
 public class BridgeApiInfoDto {
 
     private int bridgeType;
-<<<<<<< HEAD
-<<<<<<< HEAD
     private BridgeApiInfoIdDto ids;
     private BridgeApiInfoVersionDto versions;
     private int uptime;
     private String currentTime;
     private boolean serverConnected;
     private List<BridgeApiInfoScanResultDto> scanResults;
-=======
-    private BridgeApiInfoIdsDto ids;
-    private BridgeApiInfoVersionsDto versions;
-    private int uptime;
-    private String currentTime;
-    private boolean serverConnected;
-    private List<BridgeApiInfoScanResultsDto> scanResults;
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
-    private BridgeApiInfoIdDto ids;
-    private BridgeApiInfoVersionDto versions;
-    private int uptime;
-    private String currentTime;
-    private boolean serverConnected;
-    private List<BridgeApiInfoScanResultDto> scanResults;
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
 
     public int getBridgeType() {
         return bridgeType;
@@ -50,8 +32,6 @@ public class BridgeApiInfoDto {
         this.bridgeType = bridgeType;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public BridgeApiInfoIdDto getIds() {
         return ids;
     }
@@ -65,28 +45,6 @@ public class BridgeApiInfoDto {
     }
 
     public void setVersions(BridgeApiInfoVersionDto versions) {
-=======
-    public BridgeApiInfoIdsDto getIds() {
-=======
-    public BridgeApiInfoIdDto getIds() {
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-        return ids;
-    }
-
-    public void setIds(BridgeApiInfoIdDto ids) {
-        this.ids = ids;
-    }
-
-    public BridgeApiInfoVersionDto getVersions() {
-        return versions;
-    }
-
-<<<<<<< HEAD
-    public void setVersions(BridgeApiInfoVersionsDto versions) {
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
-    public void setVersions(BridgeApiInfoVersionDto versions) {
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
         this.versions = versions;
     }
 
@@ -114,27 +72,11 @@ public class BridgeApiInfoDto {
         this.serverConnected = serverConnected;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public List<BridgeApiInfoScanResultDto> getScanResults() {
         return scanResults;
     }
 
     public void setScanResults(List<BridgeApiInfoScanResultDto> scanResults) {
-=======
-    public List<BridgeApiInfoScanResultsDto> getScanResults() {
-        return scanResults;
-    }
-
-    public void setScanResults(List<BridgeApiInfoScanResultsDto> scanResults) {
->>>>>>> 0a5308483... Implemented NukiBridgeHandler initialize
-=======
-    public List<BridgeApiInfoScanResultDto> getScanResults() {
-        return scanResults;
-    }
-
-    public void setScanResults(List<BridgeApiInfoScanResultDto> scanResults) {
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
         this.scanResults = scanResults;
     }
 

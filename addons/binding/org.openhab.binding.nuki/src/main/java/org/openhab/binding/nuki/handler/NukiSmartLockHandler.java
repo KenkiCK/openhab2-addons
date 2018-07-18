@@ -7,19 +7,8 @@
  */
 package org.openhab.binding.nuki.handler;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
-=======
-import org.eclipse.smarthome.config.core.Configuration;
->>>>>>> c32d3861e... Using unique instance of NukiHttpClient for each request
-=======
 import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.smarthome.core.library.types.DecimalType;
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
@@ -29,41 +18,12 @@ import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.eclipse.smarthome.core.types.State;
-=======
->>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
-=======
-import org.eclipse.smarthome.core.types.State;
->>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
 import org.openhab.binding.nuki.NukiBindingConstants;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
-import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
-import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
-import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
-=======
-import org.eclipse.smarthome.core.thing.ChannelUID;
-import org.eclipse.smarthome.core.thing.Thing;
-import org.eclipse.smarthome.core.thing.ThingStatus;
-import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
-import org.eclipse.smarthome.core.types.Command;
-import org.openhab.binding.nuki.NukiBindingConstants;
->>>>>>> 2a58c752c... Nuki NoOp Implementation
-=======
-import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
-import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-=======
 import org.openhab.binding.nuki.internal.converter.LockActionConverter;
 import org.openhab.binding.nuki.internal.dataexchange.BridgeLockActionResponse;
 import org.openhab.binding.nuki.internal.dataexchange.BridgeLockStateResponse;
 import org.openhab.binding.nuki.internal.dataexchange.NukiHttpClient;
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,179 +35,25 @@ import org.slf4j.LoggerFactory;
  */
 public class NukiSmartLockHandler extends BaseThingHandler {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
-=======
-    private final Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
 
     private NukiHttpClient nukiHttpClient;
 
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
         logger.trace("Instantiating NukiSmartLockHandler({})", thing);
-<<<<<<< HEAD
-=======
-    private Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
-=======
-    private final static Logger logger = LoggerFactory.getLogger(NukiSmartLockHandler.class);
-
-    private NukiHttpClient nukiHttpClient;
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-
-    public NukiSmartLockHandler(Thing thing) {
-        super(thing);
->>>>>>> 2a58c752c... Nuki NoOp Implementation
-=======
->>>>>>> 9964fbb2e... Tweaked Logging
     }
 
     @Override
     public void initialize() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         logger.debug("NukiSmartLockHandler:initialize()");
-        Configuration bridgeConfiguration;
-        try {
-            bridgeConfiguration = getBridgeConfig();
-        } catch (NukiBridgeHandlerNotAvailableException e) {
-            logger.error("ERROR[{}]", e.getMessage(), e);
-            return;
-        }
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
-        BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(bridgeConfiguration)
-                .getBridgeLockState(nukiId);
-        if (bridgeLockStateResponse.getStatus() == 200) {
-            updateStatus(ThingStatus.ONLINE);
-        } else {
-            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-                    bridgeLockStateResponse.getMessage());
-        }
-=======
-        logger.debug("NukiSmartLockHandler:initialize");
-<<<<<<< HEAD
-        updateStatus(ThingStatus.ONLINE);
->>>>>>> 2a58c752c... Nuki NoOp Implementation
-=======
-=======
-        logger.debug("NukiSmartLockHandler:initialize()");
->>>>>>> 186a95257... Fixed typo
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
-        if (nukiHttpClient == null) {
-            nukiHttpClient = getNukiHttpClient();
-        }
-        BridgeLockStateResponse bridgeLockStateResponse = nukiHttpClient.getBridgeLockState(nukiId);
-        if (bridgeLockStateResponse.getStatus() == 200) {
-            updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
-                    "Nuki Smart Lock is " + bridgeLockStateResponse.getBridgeLockState().getStateName());
-        } else {
-            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-                    bridgeLockStateResponse.getMessage());
-        }
->>>>>>> a3d389951... Implemented NukiSmartLockHandlerHandler initialize
-=======
         scheduler.execute(() -> initializeHandler());
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
     }
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
-<<<<<<< HEAD
         logger.debug("NukiSmartLockHandler:handleCommand({}, {})", channelUID, command);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
-=======
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
-        if (command.equals(RefreshType.REFRESH)) {
-            BridgeLockStateResponse bridgeLockStateResponse = new NukiHttpClient(getBridgeConfig())
-                    .getBridgeLockState(nukiId);
-            if (bridgeLockStateResponse.getStatus() == 200) {
-                updateState(channelUID,
-                        (bridgeLockStateResponse.getBridgeLockState().getState() == 1 ? OnOffType.ON : OnOffType.OFF));
-            } else {
-                logger.error("Could not refresh Nuki Smart Lock[{}]! Message: {}", nukiId,
-                        bridgeLockStateResponse.getMessage());
-            }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
-        } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)
-=======
-        } else if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCK_OPEN_CLOSE)
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
-                && (command.equals(OnOffType.ON) || command.equals(OnOffType.OFF))) {
-            int lockAction = (command.equals(OnOffType.OFF) ? NukiBindingConstants.LOCK_ACTIONS_UNLOCK
-                    : NukiBindingConstants.LOCK_ACTIONS_LOCK);
-            BridgeLockActionResponse bridgeLockActionResponse = new NukiHttpClient(getBridgeConfig())
-                    .getBridgeLockAction(nukiId, lockAction);
-            if (bridgeLockActionResponse.getStatus() != 200) {
-                logger.error("Could not execute command[{}] on Nuki Smart Lock[{}]", command, nukiId);
-            }
-        } else {
-            logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);
-<<<<<<< HEAD
-        }
-    }
-
-    @Override
-    public void handleUpdate(ChannelUID channelUID, State newState) {
-        logger.debug("NukiSmartLockHandler:handleUpdate({}, {})", channelUID, newState);
-        updateState(channelUID, newState);
-    }
-
-    @Override
-    public void dispose() {
-        logger.debug("NukiSmartLockHandler:dispose()");
-    }
-
-    private NukiHttpClient getNukiHttpClient() {
-        if (this.getBridge() != null && this.getBridge().getHandler() instanceof NukiBridgeHandler) {
-            return ((NukiBridgeHandler) this.getBridge().getHandler()).getNukiHttpClient();
-        }
-        logger.error("Could not get NukiHttpClient from NukiBridgeHandler! Did you configure a Bridge for this Thing?");
-        return null;
-=======
-=======
-        }
->>>>>>> 114939dac... Implemented NukiSmartLockHandler handleCommand REFRESH
-        if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)) {
-            logger.warn("Smart Lock Open/Close not yet implemented!");
-=======
->>>>>>> 2a4e8a643... Implemented NukiSmartLockHandler handleCommand OFF/ON
-=======
-=======
-        Configuration bridgeConfiguration;
->>>>>>> cbae43d89... Timeout for processing event
-        try {
-            bridgeConfiguration = getBridgeConfig();
-        } catch (NukiBridgeHandlerNotAvailableException e) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            logger.error(e.getMessage());
->>>>>>> b71f5105c... Incorporated various pull request review comments - Number 2 (#2019).
-=======
-            logger.error("ERROR: {}", e.getMessage(), e);
->>>>>>> d275f0cd7... Fixed Travis CI build error (ERROR found by findbugs)
-=======
-            logger.error("ERROR[{}]", e.getMessage(), e);
-            return;
-        }
-        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
-=======
         String nukiId = (String) getConfig().get(NukiBindingConstants.CONFIG_NUKI_ID);
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
         if (command instanceof RefreshType) {
             scheduler.execute(() -> handleCommandRefreshType(channelUID, command, nukiId));
         } else if (command instanceof OnOffType) {
@@ -256,9 +62,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
             scheduler.execute(() -> handleCommandDecimalType(channelUID, command, nukiId));
         } else {
             logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);
->>>>>>> cbae43d89... Timeout for processing event
         }
->>>>>>> 2a58c752c... Nuki NoOp Implementation
     }
 
     @Override

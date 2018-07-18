@@ -4,10 +4,6 @@
         xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2a58c752c... Nuki NoOp Implementation
     <!-- Nuki Bridge (Bridge Type) -->
     <bridge-type id="bridge">
         <label>Nuki Bridge</label>
@@ -19,79 +15,15 @@
             </parameter>
             <parameter name="port" type="integer" required="true">
                 <label>Port</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <description>The Port on which the Nuki Bridge REST API runs.</description>
-=======
-                <description>The Port on whicht the Nuki Bridge REST API runs.</description>
->>>>>>> 2a58c752c... Nuki NoOp Implementation
-=======
-                <description>The Port on which the Nuki Bridge REST API runs.</description>
->>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
-=======
                 <description>The Port which you configured during Initial Bridge setup (https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).</description>
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
                 <default>8080</default>
             </parameter>
             <parameter name="apiToken" type="text" required="true">
                 <label>API Token</label>
                 <description>The API Token which you configured during Initial Bridge setup (https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).</description>
             </parameter>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
-            <parameter name="CALLBACK_PORT" type="integer" required="true">
-=======
-            <parameter name="callbackPort" type="integer" required="true">
->>>>>>> d79dc40ae... Incorporated various pull request review comments (#2019).
-                <label>Callback Port</label>
-                <description>The port on the openHAB server to which the Nuki Bridge sends Lock State changes.</description>
-                <default>8081</default>
-            </parameter>
-<<<<<<< HEAD
         </config-description>
     </bridge-type>
-
-    <!-- Nuki Smart Lock (Thing Type) -->
-    <thing-type id="smartLock">
-        <supported-bridge-type-refs>
-            <bridge-type-ref id="bridge"/>
-        </supported-bridge-type-refs>
-        <label>Nuki Smart Lock</label>
-        <description>Nuki Smart Lock which is paired via Bluetooth to a Nuki Bridge.</description>
-        <channels>
-            <channel id="smartLockOpenClose" typeId="channelTypeSmartLockOpenClose"/>
-        </channels>
-        <config-description>
-            <parameter name="NUKIID" type="text" required="true">
-                <label>Nuki ID</label>
-                <description>The ID of the Nuki Smart Lock.</description>
-            </parameter>
-        </config-description>
-    </thing-type>
-
-    <!-- Channel Type -->
-    <channel-type id="channelTypeSmartLockOpenClose">
-        <item-type>Switch</item-type>
-        <label>Nuki Smart Lock Open/Close</label>
-        <description>Nuki Smart Lock channel to open or close the door.</description>
-=======
-    <!-- Sample Thing Type -->
-    <thing-type id="sample">
-        <label>Nuki Binding Thing</label>
-        <description>Sample thing for Nuki Binding</description>
-=======
-=======
->>>>>>> 3662262e1... Implemented NukiHttpServer for Nuki Bridge callbacks
-=======
->>>>>>> d4ea03b13... Incorporated various pull request review comments - Number 4 (#2019).
-        </config-description>
-    </bridge-type>
->>>>>>> 2a58c752c... Nuki NoOp Implementation
 
     <!-- Nuki Smart Lock (Thing Type) -->
     <thing-type id="smartlock">
@@ -118,22 +50,9 @@
         </config-description>
     </thing-type>
 
-<<<<<<< HEAD
-    <!-- Sample Channel Type -->
-    <channel-type id="sample-channel">
-        <item-type>nukiItem</item-type>
-        <label>Nuki Binding Channel</label>
-        <description>Sample channel for Nuki Binding</description>
->>>>>>> 32e822771... Initial commit of the Nuki Binding
-=======
     <!-- Channel Type -->
     <channel-type id="smartlockUnlock">
         <item-type>Switch</item-type>
-<<<<<<< HEAD
-        <label>Nuki Smart Lock Open/Close</label>
-        <description>Nuki Smart Lock channel to open or close the door.</description>
->>>>>>> 2a58c752c... Nuki NoOp Implementation
-=======
         <label>Nuki Smart Lock Unlock / Lock</label>
         <description>Use this channel with a Switch Item to unlock and lock the door. Configure "Unlatch" to true if your Nuki Smart Lock is mounted on a door lock with a knob on the outside.</description>
         <category>Door</category>
@@ -143,7 +62,6 @@
                 <option value="ON">Locks the door</option>
             </options>
         </state>
->>>>>>> 330cf6474... Incorporated various pull request review comments - Number 5 (#2019).
     </channel-type>
 
     <channel-type id="smartlockLockAction">

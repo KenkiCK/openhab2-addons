@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * Supplies resolved redirect URLs of {@link NestBindingConstants#NEST_URL} so they can be used with HTTP clients that
  * do not pass Authorization headers after redirects like the Jetty client used by {@link HttpUtil}.
  *
+ * @author Wouter Born - Initial contribution
  * @author Wouter Born - Extract resolving redirect URL from NestBridgeHandler into NestRedirectUrlSupplier
  */
 @NonNullByDefault
@@ -37,11 +38,11 @@ public class NestRedirectUrlSupplier {
 
     private final Logger logger = LoggerFactory.getLogger(NestRedirectUrlSupplier.class);
 
-    private String cachedUrl = "";
+    protected String cachedUrl = "";
 
-    private Properties httpHeaders;
+    protected Properties httpHeaders;
 
-    NestRedirectUrlSupplier(Properties httpHeaders) {
+    public NestRedirectUrlSupplier(Properties httpHeaders) {
         this.httpHeaders = httpHeaders;
     }
 

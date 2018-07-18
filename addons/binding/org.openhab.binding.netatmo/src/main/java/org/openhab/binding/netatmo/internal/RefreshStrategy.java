@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,15 +23,14 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
  */
 @NonNullByDefault
 public class RefreshStrategy {
-    private static int DEFAULT_DELAY = 30;
+    private static final int DEFAULT_DELAY = 30;
     private int dataValidityPeriod;
     private long dataTimeStamp;
 
     // By default we create dataTimeStamp to be outdated
     public RefreshStrategy(int dataValidityPeriod) {
         this.dataValidityPeriod = dataValidityPeriod;
-        ZonedDateTime now = ZonedDateTime.now().minus(this.dataValidityPeriod, ChronoUnit.MILLIS);
-        dataTimeStamp = now.toInstant().toEpochMilli();
+        expireData();
     }
 
     public void setDataTimeStamp(Integer dataTimestamp) {
@@ -49,6 +48,11 @@ public class RefreshStrategy {
 
     public long nextRunDelayInS() {
         return Math.max(0, (dataValidityPeriod - dataAge())) / 1000 + DEFAULT_DELAY;
+    }
+
+    public void expireData() {
+        ZonedDateTime now = ZonedDateTime.now().minus(this.dataValidityPeriod, ChronoUnit.MILLIS);
+        dataTimeStamp = now.toInstant().toEpochMilli();
     }
 
 }

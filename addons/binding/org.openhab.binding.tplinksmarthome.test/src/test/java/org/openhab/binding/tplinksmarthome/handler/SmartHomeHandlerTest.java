@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,13 +9,14 @@
 package org.openhab.binding.tplinksmarthome.handler;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.openhab.binding.tplinksmarthome.TPLinkSmartHomeBindingConstants.*;
 
 import java.io.IOException;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.smarthome.config.core.Configuration;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
@@ -45,7 +46,6 @@ import org.openhab.binding.tplinksmarthome.internal.model.ModelTestUtil;
  *
  * @author Hilbrand Bouwkamp - Initial contribution
  */
-@SuppressWarnings("null")
 public class SmartHomeHandlerTest {
 
     private static final String CHANNEL_PREFIX = "binding:tplinksmarthome:1234:";
@@ -61,13 +61,14 @@ public class SmartHomeHandlerTest {
     @Mock
     private SmartHomeDevice smartHomeDevice;
 
+    @NonNull
     private final Configuration configuration = new Configuration();
 
     @Before
     public void setUp() throws IOException {
         initMocks(this);
         configuration.put(TPLinkSmartHomeBindingConstants.CONFIG_IP, "localhost");
-        configuration.put(TPLinkSmartHomeBindingConstants.CONFIG_REFRESH, 300);
+        configuration.put(TPLinkSmartHomeBindingConstants.CONFIG_REFRESH, 0);
         when(thing.getConfiguration()).thenReturn(configuration);
         when(smartHomeDevice.getUpdateCommand()).thenReturn(Commands.getSysinfo());
         when(connection.sendCommand(Commands.getSysinfo()))
@@ -80,7 +81,6 @@ public class SmartHomeHandlerTest {
         };
         when(smartHomeDevice.handleCommand(eq(CHANNEL_SWITCH), eq(connection), any(), any())).thenReturn(true);
         handler.setCallback(callback);
-        handler.initialize();
     }
 
     @After
@@ -90,6 +90,7 @@ public class SmartHomeHandlerTest {
 
     @Test
     public void testInitializeShouldCallTheCallback() throws InterruptedException {
+        handler.initialize();
         ArgumentCaptor<ThingStatusInfo> statusInfoCaptor = ArgumentCaptor.forClass(ThingStatusInfo.class);
 
         verify(callback).statusUpdated(eq(thing), statusInfoCaptor.capture());
@@ -98,16 +99,29 @@ public class SmartHomeHandlerTest {
     }
 
     @Test
-    public void testHhandleCommandRefreshType() {
+    public void testHandleCommandRefreshType() {
+        assertHandleCommandRefreshType(-53);
+    }
+
+    @Test
+    public void testHandleCommandRefreshTypeRangeExtender() throws IOException {
+        when(connection.sendCommand(Commands.getSysinfo()))
+                .thenReturn(ModelTestUtil.readJson("rangeextender_get_sysinfo_response"));
+        assertHandleCommandRefreshType(-70);
+    }
+
+    private void assertHandleCommandRefreshType(int expectedRssi) {
+        handler.initialize();
         ChannelUID channelUID = new ChannelUID(CHANNEL_PREFIX + CHANNEL_RSSI);
         handler.handleCommand(channelUID, RefreshType.REFRESH);
         ArgumentCaptor<State> stateCaptor = ArgumentCaptor.forClass(State.class);
         verify(callback).stateUpdated(eq(channelUID), stateCaptor.capture());
-        assertEquals("State of RSSI channel should be set", new DecimalType(-53), stateCaptor.getValue());
+        assertEquals("State of RSSI channel should be set", new DecimalType(expectedRssi), stateCaptor.getValue());
     }
 
     @Test
-    public void testHhandleCommandOther() throws InterruptedException {
+    public void testHandleCommandOther() throws InterruptedException {
+        handler.initialize();
         ChannelUID channelUID = new ChannelUID(CHANNEL_PREFIX + CHANNEL_SWITCH);
         Mockito.doReturn(OnOffType.ON).when(smartHomeDevice).updateChannel(eq(channelUID.getId()), any());
         handler.handleCommand(channelUID, RefreshType.REFRESH);

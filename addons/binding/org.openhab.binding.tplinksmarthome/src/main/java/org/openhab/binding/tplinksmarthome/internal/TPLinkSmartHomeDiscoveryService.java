@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Fischer - Initial contribution
  * @author Hilbrand Bouwkamp - Complete make-over, reorganized code and code cleanup.
  */
-@Component(service = DiscoveryService.class, immediate = true)
+@Component(service = DiscoveryService.class, immediate = true, configurationPid = "discovery.tplinksmarthome")
 public class TPLinkSmartHomeDiscoveryService extends AbstractDiscoveryService {
 
     private static final String BROADCAST_IP = "255.255.255.255";
@@ -160,7 +160,8 @@ public class TPLinkSmartHomeDiscoveryService extends AbstractDiscoveryService {
     private void detectThing(DatagramPacket packet) throws IOException {
         String ipAddress = packet.getAddress().getHostAddress();
         String rawData = CryptUtil.decrypt(packet.getData(), packet.getLength());
-        Sysinfo sysinfo = commands.getSysinfoReponse(rawData);
+        Sysinfo sysinfoRaw = commands.getSysinfoReponse(rawData);
+        Sysinfo sysinfo = sysinfoRaw.getActualSysinfo();
 
         logger.trace("Detected TP-Link Smart Home device: {}", rawData);
         String deviceId = sysinfo.getDeviceId();
@@ -171,7 +172,7 @@ public class TPLinkSmartHomeDiscoveryService extends AbstractDiscoveryService {
             ThingUID thingUID = new ThingUID(thingTypeUID.get(),
                     deviceId.substring(deviceId.length() - 6, deviceId.length()));
             DiscoveryResult discoveryResult = DiscoveryResultBuilder.create(thingUID).withLabel(sysinfo.getAlias())
-                    .withProperties(PropertiesCollector.collectProperties(thingTypeUID.get(), ipAddress, sysinfo))
+                    .withProperties(PropertiesCollector.collectProperties(thingTypeUID.get(), ipAddress, sysinfoRaw))
                     .build();
             thingDiscovered(discoveryResult);
         } else {

@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -113,13 +114,15 @@ public class NukiApiServlet extends HttpServlet {
             String nukiIdThing;
             for (Thing thing : thingRegistry.getAll()) {
                 nukiIdThing = thing.getConfiguration().containsKey(NukiBindingConstants.CONFIG_NUKI_ID)
-                        ? (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID) : null;
+                        ? (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID)
+                        : null;
                 if (nukiIdThing != null && nukiIdThing.equals(nukiId)) {
                     logger.debug("Processing ThingUID[{}]", thing.getUID());
                     Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_UNLOCK);
                     if (channel != null) {
                         State state = bridgeApiLockStateRequestDto.getState() == NukiBindingConstants.LOCK_STATES_LOCKED
-                                ? OnOffType.ON : OnOffType.OFF;
+                                ? OnOffType.ON
+                                : OnOffType.OFF;
                         ((NukiSmartLockHandler) thing.getHandler()).handleApiServletUpdate(channel.getUID(), state);
                     }
                     channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_LOCK_ACTION);

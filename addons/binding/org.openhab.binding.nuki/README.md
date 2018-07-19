@@ -10,9 +10,9 @@ This binding allows you to integrate, view, control and configure the Nuki Bridg
 ## Prerequisites
 
 1. At least one Nuki Smart Lock which is paired via Bluetooth with a Nuki Bridge. For this go and get either:
-  * a [Nuki Smart Lock](https://nuki.io/en/smart-lock/) and a [Nuki Bridge](https://nuki.io/en/bridge/) or
-  * the [Nuki Combo](https://nuki.io/en/shop/nuki-combo/) or
-  * a [Nuki Smart Lock](https://nuki.io/en/smart-lock/) and the Nuki [Nuki Software Bridge](https://play.google.com/store/apps/details?id=io.nuki.bridge)
+    * a [Nuki Smart Lock](https://nuki.io/en/smart-lock/) and a [Nuki Bridge](https://nuki.io/en/bridge/) or
+    * the [Nuki Combo](https://nuki.io/en/shop/nuki-combo/) or
+    * a [Nuki Smart Lock](https://nuki.io/en/smart-lock/) and the Nuki [Nuki Software Bridge](https://play.google.com/store/apps/details?id=io.nuki.bridge)
 2. The Bridge HTTP-API has to be enabled during [Initial Bridge setup](https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/). Note down the IP, Port and API token.
 3. A registered callback URL on the Nuki Bridge which points to http://< openHAB IP >/nuki/bcb
 
@@ -40,16 +40,16 @@ Nuki Smart Lock(s) which is/are paired via Bluetooth with the Nuki Bridge.
 ## Supported Channels
 
 - **unlock** (Switch)  
-Use this channel with a Switch Item to unlock and lock the door. Configure "Unlatch" to true if your Nuki Smart Lock is mounted on a door lock with a knob on the outside.
+    Use this channel with a Switch Item to unlock and lock the door. Configure "Unlatch" to true if your Nuki Smart Lock is mounted on a door lock with a knob on the outside.
 
 - **lockAction** (Number)  
-Use this channel if you want to execute other supported lock actions or to display the current lock state.  
-Supported Lock Actions are: 2 (Unlock), 7 (Unlatch), 1002 (Lock 'n' Go), 1007 (Lock 'n' Go with Unlatch) and 4 (Lock).  
-Supported Lock States are : 1 (Locked), 2 (Unlocking), 3 (Unlocked), 4 (Locking), 7 (Unlatching), 1002 (Unlocking initiated through Lock 'n' Go) and 1007 (Unlatching initiated through Lock 'n' Go with Unlatch).  
-Unfortunately the Nuki Bridge is not reporting any transition states (e.g. for Lock 'n' Go).
+    Use this channel if you want to execute other supported lock actions or to display the current lock state.  
+    Supported Lock Actions are: 2 (Unlock), 7 (Unlatch), 1002 (Lock 'n' Go), 1007 (Lock 'n' Go with Unlatch) and 4 (Lock).  
+    Supported Lock States are : 1 (Locked), 2 (Unlocking), 3 (Unlocked), 4 (Locking), 7 (Unlatching), 1002 (Unlocking initiated through Lock 'n' Go) and 1007 (Unlatching initiated through Lock 'n' Go with Unlatch).  
+    Unfortunately the Nuki Bridge is not reporting any transition states (e.g. for Lock 'n' Go).
 
 - **lowBattery** (Switch)  
-The Eclipse Smart Home system.low-battery channel.
+    The Eclipse Smart Home system.low-battery channel.
 
 Please see also below the Manual configuration examples!
 
@@ -80,25 +80,27 @@ The callback URL has to be */nuki/bcb*.
 ### Bridge Configuration (in openHAB PaperUI)
 
 There are three configuration parameters for a bridge:
+
 - **IP Address** (required)  
-The IP address of the Nuki Bridge. Look it up on your router. It is recommended to set a static IP address lease for the Nuki Bridge (and for your openHAB server too) on your router.
+    The IP address of the Nuki Bridge. Look it up on your router. It is recommended to set a static IP address lease for the Nuki Bridge (and for your openHAB server too) on your router.
 
 - **Port** (required)  
-The Port which you configured during [Initial Bridge setup](https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).
+    The Port which you configured during [Initial Bridge setup](https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).
 
 - **API Token** (required)  
-The API Token which you configured during [Initial Bridge setup](https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).
+    The API Token which you configured during [Initial Bridge setup](https://nuki.io/en/support/bridge/bridge-setup/initial-bridge-setup/).
 
 
 
 ### Thing Configuration (in openHAB PaperUI)
 
 There are two configuration parameters for a thing:  
+
 - **Nuki ID** (required)  
-The ID of the Nuki Smart Lock. Get it through the [Bridge HTTP-API](https://nuki.io/en/api/), Endpoint */list*.
+    The ID of the Nuki Smart Lock. Get it through the [Bridge HTTP-API](https://nuki.io/en/api/), Endpoint */list*.
 
 - **Unlatch**  
-If switched to On (or set to true) the Nuki Smart Lock will unlock the door but then also automatically pull the latch of the door lock. Usually, if the door hinges are correctly adjusted, the door will then swing open.
+    If switched to On (or set to true) the Nuki Smart Lock will unlock the door but then also automatically pull the latch of the door lock. Usually, if the door hinges are correctly adjusted, the door will then swing open.
 
 
 

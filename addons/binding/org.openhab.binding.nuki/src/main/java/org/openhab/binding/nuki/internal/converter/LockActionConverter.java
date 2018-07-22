@@ -27,8 +27,10 @@ public abstract class LockActionConverter {
         mapping.put(NukiBindingConstants.LOCK_STATES_UNLOCKING, NukiBindingConstants.LOCK_ACTIONS_UNLOCK);
         mapping.put(NukiBindingConstants.LOCK_STATES_LOCKING, NukiBindingConstants.LOCK_ACTIONS_LOCK);
         mapping.put(NukiBindingConstants.LOCK_STATES_UNLATCHING, NukiBindingConstants.LOCK_ACTIONS_UNLATCH);
-        mapping.put(NukiBindingConstants.LOCK_STATES_UNLOCKING_LOCK_N_GO, NukiBindingConstants.LOCK_ACTIONS_LOCK_N_GO);
-        mapping.put(1007, NukiBindingConstants.LOCK_ACTIONS_LOCK_N_GO_UNLATCH);
+        mapping.put(NukiBindingConstants.LOCK_STATES_UNLOCKING_LOCKNGO,
+                NukiBindingConstants.LOCK_ACTIONS_LOCKNGO_UNLOCK);
+        mapping.put(NukiBindingConstants.LOCK_STATES_UNLATCHING_LOCKNGO,
+                NukiBindingConstants.LOCK_ACTIONS_LOCKNGO_UNLATCH);
     }
 
     public static int getLockActionFor(int lockState) {

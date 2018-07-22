@@ -8,6 +8,9 @@
  */
 package org.openhab.binding.nuki.handler;
 
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ChannelUID;
@@ -29,8 +32,10 @@ import org.slf4j.LoggerFactory;
 public class NukiBridgeHandler extends BaseBridgeHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(NukiBridgeHandler.class);
+    private final static int RETRYJOB_INTERVAL = 60;
 
     private NukiHttpClient nukiHttpClient;
+    private ScheduledFuture<?> retryJob;
 
     public NukiBridgeHandler(Bridge bridge) {
         super(bridge);
@@ -57,16 +62,42 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
         logger.debug("NukiBridgeHandler:dispose()");
         nukiHttpClient.stopClient();
         nukiHttpClient = null;
+        cancelRetryJob();
     }
 
     private void initializeHandler() {
         logger.debug("NukiBridgeHandler:initializeHandler()");
-        nukiHttpClient = new NukiHttpClient(getConfig());
+        if (nukiHttpClient == null) {
+            nukiHttpClient = new NukiHttpClient(getConfig());
+        }
         BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
         if (bridgeInfoResponse.getStatus() == HttpStatus.OK_200) {
             updateStatus(ThingStatus.ONLINE);
+            cancelRetryJob();
         } else {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR, bridgeInfoResponse.getMessage());
+            scheduleRetryJob();
+        }
+    }
+
+    private void scheduleRetryJob() {
+        logger.trace("NukiBridgeHandler:scheduleRetryJob():Scheduling retryJob in {}secs for Bridge.",
+                RETRYJOB_INTERVAL);
+        if (retryJob != null && !retryJob.isDone()) {
+            logger.trace("NukiBridgeHandler:scheduleRetryJob():Already scheduled for Bridge.");
+            return;
+        }
+        retryJob = null;
+        retryJob = scheduler.schedule(() -> {
+            initialize();
+        }, RETRYJOB_INTERVAL, TimeUnit.SECONDS);
+    }
+
+    private void cancelRetryJob() {
+        logger.trace("NukiBridgeHandler:cancelRetryJob():Canceling retryJob for Bridge.");
+        if (retryJob != null) {
+            retryJob.cancel(true);
+            retryJob = null;
         }
     }
 

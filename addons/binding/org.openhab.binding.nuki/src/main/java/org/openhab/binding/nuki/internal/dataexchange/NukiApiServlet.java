@@ -99,7 +99,52 @@ public class NukiApiServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         logger.debug("NukiApiServlet:service URI[{}] request[{}]", request.getRequestURI(), request);
+        BridgeApiLockStateRequestDto bridgeApiLockStateRequestDto = getBridgeApiLockStateRequestDto(request);
+        if (bridgeApiLockStateRequestDto == null) {
+            logger.warn("Could not handle request - Discarding the Bridge Callback Request!");
+            setHeaders(response);
+            response.getWriter().println(gson.toJson(new NukiHttpServerStatusResponseDto("OK")));
+            return;
+        }
+        String nukiId = Integer.toString(bridgeApiLockStateRequestDto.getNukiId());
+        String nukiIdThing;
+        for (Thing thing : thingRegistry.getAll()) {
+            nukiIdThing = thing.getConfiguration().containsKey(NukiBindingConstants.CONFIG_NUKI_ID)
+                    ? (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID)
+                    : null;
+            if (nukiIdThing != null && nukiIdThing.equals(nukiId)) {
+                logger.debug("Processing ThingUID[{}]", thing.getUID());
+                NukiSmartLockHandler nsh = getSmartLockHandler(thing);
+                if (nsh == null) {
+                    logger.warn("Could not update channels for ThingUID[{}] because Handler is null!", thing.getUID());
+                    break;
+                }
+                Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_UNLOCK);
+                if (channel != null) {
+                    State state = bridgeApiLockStateRequestDto.getState() == NukiBindingConstants.LOCK_STATES_LOCKED
+                            ? OnOffType.ON
+                            : OnOffType.OFF;
+                    nsh.handleApiServletUpdate(channel.getUID(), state);
+                }
+                channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_LOCK_ACTION);
+                if (channel != null) {
+                    State state = new DecimalType(bridgeApiLockStateRequestDto.getState());
+                    nsh.handleApiServletUpdate(channel.getUID(), state);
+                }
+                channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_LOW_BATTERY);
+                if (channel != null) {
+                    State state = bridgeApiLockStateRequestDto.isBatteryCritical() == true ? OnOffType.ON
+                            : OnOffType.OFF;
+                    nsh.handleApiServletUpdate(channel.getUID(), state);
+                }
+            }
+        }
+        setHeaders(response);
+        response.getWriter().println(gson.toJson(new NukiHttpServerStatusResponseDto("OK")));
+    }
 
+    private BridgeApiLockStateRequestDto getBridgeApiLockStateRequestDto(HttpServletRequest request) {
+        logger.trace("NukiApiServlet:getBridgeApiLockStateRequestDto(...)");
         StringBuffer requestContent = new StringBuffer();
         String line = null;
         try {
@@ -108,41 +153,22 @@ public class NukiApiServlet extends HttpServlet {
                 requestContent.append(line);
             }
             logger.trace("requestContent[{}]", requestContent);
-            BridgeApiLockStateRequestDto bridgeApiLockStateRequestDto = gson.fromJson(requestContent.toString(),
-                    BridgeApiLockStateRequestDto.class);
-            String nukiId = Integer.toString(bridgeApiLockStateRequestDto.getNukiId());
-            String nukiIdThing;
-            for (Thing thing : thingRegistry.getAll()) {
-                nukiIdThing = thing.getConfiguration().containsKey(NukiBindingConstants.CONFIG_NUKI_ID)
-                        ? (String) thing.getConfiguration().get(NukiBindingConstants.CONFIG_NUKI_ID)
-                        : null;
-                if (nukiIdThing != null && nukiIdThing.equals(nukiId)) {
-                    logger.debug("Processing ThingUID[{}]", thing.getUID());
-                    Channel channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_UNLOCK);
-                    if (channel != null) {
-                        State state = bridgeApiLockStateRequestDto.getState() == NukiBindingConstants.LOCK_STATES_LOCKED
-                                ? OnOffType.ON
-                                : OnOffType.OFF;
-                        ((NukiSmartLockHandler) thing.getHandler()).handleApiServletUpdate(channel.getUID(), state);
-                    }
-                    channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_LOCK_ACTION);
-                    if (channel != null) {
-                        State state = new DecimalType(bridgeApiLockStateRequestDto.getState());
-                        ((NukiSmartLockHandler) thing.getHandler()).handleApiServletUpdate(channel.getUID(), state);
-                    }
-                    channel = thing.getChannel(NukiBindingConstants.CHANNEL_SMARTLOCK_LOW_BATTERY);
-                    if (channel != null) {
-                        State state = bridgeApiLockStateRequestDto.isBatteryCritical() == true ? OnOffType.ON
-                                : OnOffType.OFF;
-                        ((NukiSmartLockHandler) thing.getHandler()).handleApiServletUpdate(channel.getUID(), state);
-                    }
-                }
-            }
+            return gson.fromJson(requestContent.toString(), BridgeApiLockStateRequestDto.class);
         } catch (Exception e) {
-            logger.warn("Could not handle request! Message[{}]", e.getMessage(), e);
+            logger.warn("Could not build BridgeApiLockStateRequestDto from ServletRequest! Message[{}]", e.getMessage(),
+                    e);
+            return null;
         }
-        setHeaders(response);
-        response.getWriter().println(gson.toJson(new NukiHttpServerStatusResponseDto("OK")));
+    }
+
+    private NukiSmartLockHandler getSmartLockHandler(Thing thing) {
+        logger.trace("NukiApiServlet:getSmartLockHandler(...)");
+        NukiSmartLockHandler nsh = (NukiSmartLockHandler) thing.getHandler();
+        if (nsh == null) {
+            logger.warn("Could not get NukiSmartLockHandler for ThingUID[{}]!", thing.getUID());
+            return null;
+        }
+        return nsh;
     }
 
     private void setHeaders(HttpServletResponse response) {

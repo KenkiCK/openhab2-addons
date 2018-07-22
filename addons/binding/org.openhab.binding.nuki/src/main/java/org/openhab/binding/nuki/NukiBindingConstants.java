@@ -54,8 +54,8 @@ public class NukiBindingConstants {
     public static final int LOCK_ACTIONS_UNLOCK = 1;
     public static final int LOCK_ACTIONS_LOCK = 2;
     public static final int LOCK_ACTIONS_UNLATCH = 3;
-    public static final int LOCK_ACTIONS_LOCK_N_GO = 4;
-    public static final int LOCK_ACTIONS_LOCK_N_GO_UNLATCH = 5;
+    public static final int LOCK_ACTIONS_LOCKNGO_UNLOCK = 4;
+    public static final int LOCK_ACTIONS_LOCKNGO_UNLATCH = 5;
 
     // Nuki Bridge API Lock States
     public static final int LOCK_STATES_UNCALIBRATED = 0;
@@ -70,6 +70,7 @@ public class NukiBindingConstants {
     public static final int LOCK_STATES_UNDEFINED = 255;
 
     // Nuki Binding additional Lock States
-    public static final int LOCK_STATES_UNLOCKING_LOCK_N_GO = 1002;
+    public static final int LOCK_STATES_UNLOCKING_LOCKNGO = 1002;
+    public static final int LOCK_STATES_UNLATCHING_LOCKNGO = 1007;
 
 }
